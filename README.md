@@ -7,9 +7,9 @@ A time slot picker for react native
 ## Installation
 
 ```sh
-npm i react-native-time-slot-picker
+npm i @dgreasi/react-native-time-slot-picker
 # OR
-yarn add react-native-time-slot-picker
+yarn add @dgreasi/react-native-time-slot-picker
 ```
 
 ## Usage

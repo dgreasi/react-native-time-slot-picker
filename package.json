@@ -1,5 +1,5 @@
 {
-  "name": "react-native-time-slot-picker",
+  "name": "@dgreasi/react-native-time-slot-picker",
   "version": "0.0.1",
   "description": "A time slot picker for react native",
   "main": "lib/commonjs/index",

@@ -83,7 +83,4 @@ export const dummyAvailableDates: IAvailableDates[] = getDummyAvailableDates();
 export const bookedData = {
   appointmentDate: getNextDays(2).toDateString(),
   appointmentTime: fixedAvailableDates?.[0]?.slotTimes?.[2] || '11:00-12:00',
-  roomID: '',
-  shopID: 1,
-  isMine: true,
 };

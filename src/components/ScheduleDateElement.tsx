@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { type IAvailableDates } from '../interfaces/app.interface';
+import { IAvailableDates } from '../interfaces/app.interface';
 import CalendarDay from './CalendarDay';
 
 interface ScheduleDateElementProps {

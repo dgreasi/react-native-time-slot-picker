@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import {
-  type IAppointment,
-  TimeSlotPicker,
-} from 'react-native-time-slot-picker';
+import { IAppointment, TimeSlotPicker } from 'react-native-time-slot-picker';
 import { useEffect, useState } from 'react';
 import { bookedData, dummyAvailableDates } from './data';
 

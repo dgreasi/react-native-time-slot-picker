@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  type IAppointment,
-  type IAvailableDates,
-} from './interfaces/app.interface';
+import { IAppointment, IAvailableDates } from './interfaces/app.interface';
 import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
 import TimeSlots from './components/TimeSlots';

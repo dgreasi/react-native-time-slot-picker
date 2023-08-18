@@ -1,4 +1,4 @@
-import { type IAvailableDates } from '../interfaces/app.interface';
+import { IAvailableDates } from '../interfaces/app.interface';
 
 const fixedSlotTimes = [
   '08:00-09:00',

@@ -1,9 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import {
-  type IAppointment,
-  type IAvailableDates,
-} from '../interfaces/app.interface';
+import { IAppointment, IAvailableDates } from '../interfaces/app.interface';
 import ScheduleDateElement from './ScheduleDateElement';
 import { theme } from '../utils/theme';
 import { monthNames } from '../utils/data';

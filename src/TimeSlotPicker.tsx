@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { IAppointment, IAvailableDates } from './interfaces/app.interface';
 import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
@@ -10,6 +10,11 @@ import {
   setActiveColor,
   setTimeSlotWidth,
 } from './utils/store';
+
+export const SelectedDateContext = createContext<string>('');
+export const ScheduledAppointmentContext = createContext<
+  IAppointment | undefined
+>(undefined);
 
 interface Props {
   availableDates: IAvailableDates[];
@@ -71,28 +76,31 @@ const TimeSlotPicker = ({
   }, [selectedDate, selectedTime]);
 
   return (
-    <View style={{ marginTop }}>
-      <View>
-        <ScheduleDatePicker
-          selectedDate={selectedDate}
-          availableDates={availableDates}
-          setSelectedDate={setSelectedDate}
-          setSelectedTime={setSelectedTime}
-          scheduledAppointment={scheduledAppointment}
-          backgroundColor={datePickerBackgroundColor}
-        />
-      </View>
-      {selectedDate && (
-        <TimeSlots
-          title={timeSlotsTitle}
-          selectedTime={selectedTime}
-          setSelectedTime={setSelectedTime}
-          slotTimes={selectedDate.slotTimes}
-          backgroundColor={timeSlotsBackgroundColor}
-          scheduledAppointment={scheduledAppointment}
-        />
-      )}
-    </View>
+    <SelectedDateContext.Provider value={selectedDate?.slotDate || ''}>
+      <ScheduledAppointmentContext.Provider value={scheduledAppointment}>
+        <View style={{ marginTop }}>
+          <View>
+            <ScheduleDatePicker
+              selectedDate={selectedDate}
+              availableDates={availableDates}
+              setSelectedDate={setSelectedDate}
+              setSelectedTime={setSelectedTime}
+              scheduledAppointment={scheduledAppointment}
+              backgroundColor={datePickerBackgroundColor}
+            />
+          </View>
+          {selectedDate && (
+            <TimeSlots
+              title={timeSlotsTitle}
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+              slotTimes={selectedDate.slotTimes}
+              backgroundColor={timeSlotsBackgroundColor}
+            />
+          )}
+        </View>
+      </ScheduledAppointmentContext.Provider>
+    </SelectedDateContext.Provider>
   );
 };
 

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { activeColor, defaultTimeSlotWidth } from '../utils/store';
 import { theme } from '../utils/theme';
+import {
+  ScheduledAppointmentContext,
+  SelectedDateContext,
+} from '../TimeSlotPicker';
 
 interface Props {
   value: string;
@@ -11,6 +15,40 @@ interface Props {
 
 const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
   const isSelected = selectedTime === value;
+  const scheduledAppointment = useContext(ScheduledAppointmentContext);
+  const selectedDate = useContext(SelectedDateContext);
+
+  const appointmentDot = useMemo(() => {
+    return (
+      <View
+        style={[
+          styles.todayDot,
+          isSelected
+            ? styles.todayBackground
+            : { backgroundColor: activeColor },
+        ]}
+      />
+    );
+  }, [isSelected]);
+
+  const getAppointmentDot: () => React.JSX.Element | null = useCallback(() => {
+    if (scheduledAppointment?.appointmentDate) {
+      const appointmentDate = new Date(
+        scheduledAppointment?.appointmentDate
+      ).toDateString();
+
+      if (
+        selectedDate === appointmentDate &&
+        scheduledAppointment.appointmentTime === value
+      ) {
+        return appointmentDot;
+      }
+    }
+
+    return null;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appointmentDot, scheduledAppointment, selectedDate]);
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -26,6 +64,7 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
         >
           {value}
         </Text>
+        {getAppointmentDot()}
       </View>
     </TouchableOpacity>
   );
@@ -52,6 +91,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 20,
     fontWeight: '400',
+  },
+  todayBackground: {
+    backgroundColor: theme.colors.primary200,
+  },
+  todayDot: {
+    position: 'absolute',
+    bottom: 4,
+    width: 6,
+    height: 6,
+    borderRadius: theme.borderRadii.l,
   },
 });
 

@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [TODOS]
 
+- Update logic for getAppointmentDay() to show dot in dates.
 - Add translations for weekdays/months.
 - Add dot in time slot to show already existed appointment.
 
@@ -11,6 +12,7 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
+- Show dot for scheduled appointments in time slots.
 - Add screenshots to readme file.
 - Add changelog file.
 

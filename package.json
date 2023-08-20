@@ -1,6 +1,6 @@
 {
   "name": "@dgreasi/react-native-time-slot-picker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A time slot picker for react native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -33,7 +33,8 @@
     "prepack": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "bootstrap": "yarn example && yarn install"
+    "bootstrap": "yarn example && yarn install",
+    "deploy": "npm pack && npm publish"
   },
   "keywords": [
     "react-native",

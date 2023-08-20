@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  type GestureResponderEvent,
+  GestureResponderEvent,
   TouchableOpacity,
-  type TouchableOpacityProps,
+  TouchableOpacityProps,
 } from 'react-native';
 
 interface Props extends TouchableOpacityProps {

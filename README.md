@@ -9,6 +9,7 @@ Pick a day and the timeslot you wish.
 [<img src="example/screenshots/1.png" width="180"/>](example/screenshots/1.png)
 [<img src="example/screenshots/2.png" width="180"/>](example/screenshots/2.png)
 [<img src="example/screenshots/3.png" width="180"/>](example/screenshots/3.png)
+[<img src="example/screenshots/4.png" width="180"/>](example/screenshots/4.png)
 
 ## Table of contents
 

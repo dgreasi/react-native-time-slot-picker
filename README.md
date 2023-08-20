@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-You can find a set of detailed examples [here](https://github.com/dgreasi/react-native-time-slot-picker/tree/main/example).
+You can find a set of detailed examples [here](example/src/App.tsx).
 
 Also a running snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
 

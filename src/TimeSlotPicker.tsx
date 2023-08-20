@@ -89,6 +89,7 @@ const TimeSlotPicker = ({
           setSelectedTime={setSelectedTime}
           slotTimes={selectedDate.slotTimes}
           backgroundColor={timeSlotsBackgroundColor}
+          scheduledAppointment={scheduledAppointment}
         />
       )}
     </View>

@@ -1,4 +1,4 @@
-import type { IAvailableDates } from 'react-native-time-slot-picker';
+import type { IAvailableDates } from '@dgreasi/react-native-time-slot-picker';
 
 const fixedSlotTimes = [
   '00:00-01:00',

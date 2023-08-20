@@ -5,9 +5,10 @@
 A time slot picker for react native.
 
 Pick a day and the timeslot you wish.
-![image1](example/screenshots/1.png)
-![image1](example/screenshots/2.png)
-![image1](example/screenshots/3.png)
+
+[<img src="example/screenshots/1.png" width="180"/>]()
+[<img src="example/screenshots/2.png" width="180"/>]()
+[<img src="example/screenshots/3.png" width="180"/>]()
 
 ## Table of contents
 

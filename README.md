@@ -36,7 +36,7 @@ import {
   IAppointment,
   IAvailableDates,
   TimeSlotPicker,
-} from 'react-native-time-slot-picker';
+} from '@dgreasi/react-native-time-slot-picker';
 import { useEffect, useState } from 'react';
 
 const availableDates: IAvailableDates[] = [

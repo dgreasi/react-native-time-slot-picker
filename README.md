@@ -32,7 +32,7 @@ yarn add @dgreasi/react-native-time-slot-picker
 import * as React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import {
-  IAddScheduleAppointmentBody,
+  IAppointment,
   IAvailableDates,
   TimeSlotPicker,
 } from 'react-native-time-slot-picker';
@@ -57,8 +57,7 @@ const availableDates: IAvailableDates[] = [
 ];
 
 export default function App() {
-  const [dateOfAppointment, setDateOfAppointment] =
-    (useState < IAddScheduleAppointmentBody) | (null > null);
+  const [dateOfAppointment, setDateOfAppointment] = useState<IAppointment | null>(null);
 
   useEffect(() => {
     // Contains the selected time slot in the following format

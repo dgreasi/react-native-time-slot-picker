@@ -2,7 +2,20 @@
 
 [![NPM version][npm-image]][npm-url] [![npm][npm-downloads]][npm-url] [![npm][license-url]][npm-url] [![npm][types-url]][npm-url] [![runs with expo][expo-image]][expo-url]
 
-A time slot picker for react native
+A time slot picker for react native.
+
+Pick a day and the timeslot you wish.
+![image1](example/screenshots/1.png)
+![image1](example/screenshots/2.png)
+![image1](example/screenshots/3.png)
+
+## Table of contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Props](#props)
+- [Interfaces](#interfaces)
+- [Changelog](CHANGELOG.md)
 
 ## Installation
 
@@ -14,7 +27,7 @@ yarn add @dgreasi/react-native-time-slot-picker
 
 ## Usage
 
-```js
+```tsx
 import * as React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import {

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { IAppointment, IAvailableDates } from '../interfaces/app.interface';
 import ScheduleDateElement from './ScheduleDateElement';
 import { theme } from '../utils/theme';
-import { monthNames } from '../utils/data';
+import { monthNames } from '../utils/store';
 
 interface Props {
   availableDates: IAvailableDates[];
@@ -16,7 +16,6 @@ interface Props {
 
 const today = new Date();
 const currentDay = today.getDate();
-const currentMonth = monthNames[today.getMonth()]?.value;
 
 // TODO: add args for current month, current day titles
 
@@ -29,6 +28,7 @@ const ScheduleDatePicker = ({
   backgroundColor = theme.colors.white,
 }: Props) => {
   const scrollRef = useRef<any>();
+  const currentMonth = monthNames[today.getMonth()];
 
   const onDatePress = (date: IAvailableDates) => {
     setSelectedDate(date);

@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { dateNames } from '../utils/data';
-import { activeColor } from '../utils/store';
+import { activeColor, dayNames } from '../utils/store';
 import { theme } from '../utils/theme';
 import Touchable from './Touchable';
 
@@ -25,7 +24,7 @@ const CalendarDay = ({
   const day = date.getDate();
 
   const getDate = (dateInput: Date) => {
-    return dateNames[dateInput.getDay()]?.value;
+    return dayNames[dateInput.getDay()];
   };
 
   const getColorOfDay = useCallback(() => {

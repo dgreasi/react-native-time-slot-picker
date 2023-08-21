@@ -2,14 +2,24 @@
 
 [![NPM version][npm-image]][npm-url] [![npm][npm-downloads]][npm-url] [![npm][license-url]][npm-url] [![npm][types-url]][npm-url] [![runs with expo][expo-image]][expo-url]
 
-A time slot picker for react native.
 
-Pick a day and the timeslot you wish.
+## Features
+
+- No dependencies.
+- A time slot picker for react native.
+- Pass the `availableDates` you want to show.
+- Pick a day and the timeslot you wish.
+- Simple UX.
+- Use colors of your preference by using the params.
+- Use day shortnames and month names of your preference by using the params.
+- Change the title of the timeslots section by using the params.
+- Change the width of timeslot element by using the params.
 
 [<img src="example/screenshots/1.png" width="180"/>](example/screenshots/1.png)
 [<img src="example/screenshots/2.png" width="180"/>](example/screenshots/2.png)
 [<img src="example/screenshots/3.png" width="180"/>](example/screenshots/3.png)
 [<img src="example/screenshots/4.png" width="180"/>](example/screenshots/4.png)
+[<img src="example/screenshots/5.png" width="180"/>](example/screenshots/5.png)
 
 ## Table of contents
 
@@ -90,29 +100,30 @@ const styles = StyleSheet.create({
 
 You can find a set of detailed examples [here](example/src/App.tsx).
 
-Also a running snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
+Also, a running snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
 
 # Props
 
-| Prop name                   | Description                                                                                                                 | Type                                                  | Default         |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | --------------- |
-| `availableDates`            | The array of the available slot times per date.                                                                             | `IAvailableDates[]`                                   | **REQUIRED**    |
-| `setDateOfAppointment`      | A component to use on top of header image. It can also be used without header image to render a custom component as header. | `(data: IAddScheduleAppointmentBody \| null) => void` | **REQUIRED**    |
-| `scheduledAppointment`      | An already existed appointment, which is going to be mark the specific date `with appointment`.                             | `IGetScheduleCallResponse`                            | `undefined`     |
-| `marginTop`                 | Margin top for the whole component.                                                                                         | `number`                                              | `0`             |
-| `datePickerBackgroundColor` | Background color of the section with the horizontal scroll, which contains the days.                                        | `hex string`                                          | `'#FFFFFF'`     |
-| `timeSlotsBackgroundColor`  | Background color of the section that contains the time slots.                                                               | `hex string`                                          | `'#FFFFFF'`     |
-| `timeSlotsTitle`            | Title of section that contains the                                                                                          | `string`                                              | `'Select time'` |
-| `mainColor`                 | Main color of the time slot picker                                                                                          | `hex string`                                          | `'#04060A'`     |
-| `timeSlotWidth`             | Time slot pill width                                                                                                        | `number`                                              | `96`            |
+| Prop name                   | Description                                                                                                                 | Type                                                  | Default             |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |---------------------|
+| `availableDates`            | The array of the available slot times per date.                                                                             | `IAvailableDates[]`                                   | **REQUIRED**        |
+| `setDateOfAppointment`      | A component to use on top of header image. It can also be used without header image to render a custom component as header. | `(data: IAddScheduleAppointmentBody \| null) => void` | **REQUIRED**        |
+| `scheduledAppointment`      | An already existed appointment, which is going to be mark the specific date `with appointment`.                             | `IGetScheduleCallResponse`                            | `undefined`         |
+| `marginTop`                 | Margin top for the whole component.                                                                                         | `number`                                              | `0`                 |
+| `datePickerBackgroundColor` | Background color of the section with the horizontal scroll, which contains the days.                                        | `hex string`                                          | `'#FFFFFF'`         |
+| `timeSlotsBackgroundColor`  | Background color of the section that contains the time slots.                                                               | `hex string`                                          | `'#FFFFFF'`         |
+| `timeSlotsTitle`            | Title of section that contains the                                                                                          | `string`                                              | `'Select time'`     |
+| `mainColor`                 | Main color of the time slot picker                                                                                          | `hex string`                                          | `'#04060A'`         |
+| `timeSlotWidth`             | Time slot pill width                                                                                                        | `number`                                              | `96`                |
+| `dayNamesOverride`          | Day string array to override letters for each Calendar day. First day is Sunday.                                            | `string[]`                                            | `defaultDayNames`   |
+| `monthNamesOverride`        | Month string array to override default month names that are used as title.                                                  | `string[]`                                            | `defaultMonthNames` |
 
 # Interfaces
 
-| Name                          | Description                                             |
-| ----------------------------- |---------------------------------------------------------|
-| `IAvailableDates`             | `{ day: number, slotDate: string, slotTimes: string[] }` |
-| `IAddScheduleAppointmentBody` | `{ appointmentDate: string, appointmentTime: string }`  |
-| `IGetScheduleCallResponse`    | `{ appointmentDate: string, appointmentTime: string }`  |
+| Name              | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `IAvailableDates` | `{ day: number, slotDate: string, slotTimes: string[] }` |
+| `IAppointment`    | `{ appointmentDate: string, appointmentTime: string }`   |
 
 ## License
 

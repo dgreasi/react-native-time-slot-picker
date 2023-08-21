@@ -84,3 +84,20 @@ export const bookedData = {
   appointmentDate: getNextDays(2).toDateString(),
   appointmentTime: fixedAvailableDates?.[0]?.slotTimes?.[2] || '11:00-12:00',
 };
+
+export const greekDayNames = ['Κ', 'Δ', 'Τρ', 'Τετ', 'Π', 'Παρ', 'Σ'];
+
+export const greekMonthNames = [
+  'Ιανουάριος',
+  'Φεβρουάριος',
+  'Μάρτιος',
+  'Απρίλιος',
+  'Μάϊος',
+  'Ιούνιος',
+  'Ιούλιος',
+  'Αύγουστος',
+  'Σεπτέμβριος',
+  'Οκτώβριος',
+  'Νοέμβριος',
+  'Δεκέμβριος',
+];

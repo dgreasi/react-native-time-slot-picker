@@ -1,10 +1,10 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import {
   IAppointment,
   TimeSlotPicker,
 } from '@dgreasi/react-native-time-slot-picker';
-import { useEffect, useState } from 'react';
 import { bookedData, dummyAvailableDates } from './data';
 
 export default function App() {
@@ -25,8 +25,10 @@ export default function App() {
           // marginTop={24}
           // datePickerBackgroundColor="#F4CC58"
           // timeSlotsBackgroundColor="#F4CC58"
-          // mainColor="#B4CC51"
+          mainColor="#B4CC51"
           // timeSlotWidth={116}
+          // dayNamesOverride={greekDayNames}
+          // monthNamesOverride={greekMonthNames}
         />
       </SafeAreaView>
     </View>

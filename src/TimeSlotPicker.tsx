@@ -1,20 +1,13 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IAppointment, IAvailableDates } from './interfaces/app.interface';
 import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
 import TimeSlots from './components/TimeSlots';
 import { fixedAvailableDates } from './utils/dateHelpers';
-import {
-  activeColor,
-  defaultTimeSlotWidth,
-  setActiveColor,
-  setTimeSlotWidth,
-} from './utils/store';
-
-export const SelectedDateContext = createContext<string>('');
-export const ScheduledAppointmentContext = createContext<
-  IAppointment | undefined
->(undefined);
+import { activeColor, defaultTimeSlotWidth } from './utils/store';
+import { defaultDayNames, defaultMonthNames } from './utils/data';
+import { useArgs } from './utils/useArgs';
+import { LocalContext } from './components/LocalContext';
 
 interface Props {
   availableDates: IAvailableDates[];
@@ -26,6 +19,8 @@ interface Props {
   timeSlotsTitle?: string;
   mainColor?: string;
   timeSlotWidth?: number;
+  dayNamesOverride?: string[];
+  monthNamesOverride?: string[];
 }
 
 // TODO: Remove default value from `availableDates`
@@ -40,19 +35,14 @@ const TimeSlotPicker = ({
   timeSlotsTitle,
   mainColor = activeColor,
   timeSlotWidth = defaultTimeSlotWidth,
+  dayNamesOverride = defaultDayNames,
+  monthNamesOverride = defaultMonthNames,
 }: Props) => {
+  useArgs(mainColor, timeSlotWidth, dayNamesOverride, monthNamesOverride);
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<IAvailableDates | undefined>(
     availableDates[0]
   );
-
-  useEffect(() => {
-    setActiveColor(mainColor);
-  }, [mainColor]);
-
-  useEffect(() => {
-    setTimeSlotWidth(timeSlotWidth);
-  }, [timeSlotWidth]);
 
   useEffect(() => {
     // Get first day with available appointments
@@ -76,31 +66,32 @@ const TimeSlotPicker = ({
   }, [selectedDate, selectedTime]);
 
   return (
-    <SelectedDateContext.Provider value={selectedDate?.slotDate || ''}>
-      <ScheduledAppointmentContext.Provider value={scheduledAppointment}>
-        <View style={{ marginTop }}>
-          <View>
-            <ScheduleDatePicker
-              selectedDate={selectedDate}
-              availableDates={availableDates}
-              setSelectedDate={setSelectedDate}
-              setSelectedTime={setSelectedTime}
-              scheduledAppointment={scheduledAppointment}
-              backgroundColor={datePickerBackgroundColor}
-            />
-          </View>
-          {selectedDate && (
-            <TimeSlots
-              title={timeSlotsTitle}
-              selectedTime={selectedTime}
-              setSelectedTime={setSelectedTime}
-              slotTimes={selectedDate.slotTimes}
-              backgroundColor={timeSlotsBackgroundColor}
-            />
-          )}
+    <LocalContext
+      slotDate={selectedDate?.slotDate || ''}
+      scheduledAppointment={scheduledAppointment}
+    >
+      <View style={{ marginTop }}>
+        <View>
+          <ScheduleDatePicker
+            selectedDate={selectedDate}
+            availableDates={availableDates}
+            setSelectedDate={setSelectedDate}
+            setSelectedTime={setSelectedTime}
+            scheduledAppointment={scheduledAppointment}
+            backgroundColor={datePickerBackgroundColor}
+          />
         </View>
-      </ScheduledAppointmentContext.Provider>
-    </SelectedDateContext.Provider>
+        {selectedDate && (
+          <TimeSlots
+            title={timeSlotsTitle}
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            slotTimes={selectedDate.slotTimes}
+            backgroundColor={timeSlotsBackgroundColor}
+          />
+        )}
+      </View>
+    </LocalContext>
   );
 };
 

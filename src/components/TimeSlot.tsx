@@ -5,7 +5,7 @@ import { theme } from '../utils/theme';
 import {
   ScheduledAppointmentContext,
   SelectedDateContext,
-} from '../TimeSlotPicker';
+} from './LocalContext';
 
 interface Props {
   value: string;

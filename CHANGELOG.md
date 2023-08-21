@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - Add translations for weekdays/months.
 - Add dot in time slot to show already existed appointment.
 
-## [0.0.4] (To be released)
+## [0.1.0] (Released at 21/08/2023)
 
 ### Features
 

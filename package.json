@@ -33,8 +33,7 @@
     "prepack": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "bootstrap": "yarn example && yarn install",
-    "deploy": "npm pack && npm publish"
+    "bootstrap": "yarn example && yarn install"
   },
   "keywords": [
     "react-native",

@@ -4,9 +4,12 @@ import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
 import TimeSlots from './components/TimeSlots';
 import { fixedAvailableDates } from './utils/dateHelpers';
-import { activeColor, defaultTimeSlotWidth } from './utils/store';
-import { defaultDayNames, defaultMonthNames } from './utils/data';
-import { useArgs } from './utils/useArgs';
+import {
+  defaultActiveColor,
+  defaultDayNames,
+  defaultMonthNames,
+  defaultTimeSlotWidth,
+} from './utils/data';
 import { LocalContext } from './components/LocalContext';
 
 interface Props {
@@ -33,12 +36,11 @@ const TimeSlotPicker = ({
   datePickerBackgroundColor,
   timeSlotsBackgroundColor,
   timeSlotsTitle,
-  mainColor = activeColor,
+  mainColor = defaultActiveColor,
   timeSlotWidth = defaultTimeSlotWidth,
   dayNamesOverride = defaultDayNames,
   monthNamesOverride = defaultMonthNames,
 }: Props) => {
-  useArgs(mainColor, timeSlotWidth, dayNamesOverride, monthNamesOverride);
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<IAvailableDates | undefined>(
     availableDates[0]
@@ -69,6 +71,12 @@ const TimeSlotPicker = ({
     <LocalContext
       slotDate={selectedDate?.slotDate || ''}
       scheduledAppointment={scheduledAppointment}
+      overrideData={{
+        mainColor,
+        timeSlotWidth,
+        dayNamesOverride,
+        monthNamesOverride,
+      }}
     >
       <View style={{ marginTop }}>
         <View>

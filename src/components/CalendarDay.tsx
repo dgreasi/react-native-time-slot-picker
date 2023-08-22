@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { activeColor, dayNames } from '../utils/store';
 import { theme } from '../utils/theme';
 import Touchable from './Touchable';
+import { OverrideDataContext } from './LocalContext';
 
 interface Props {
   disabled: boolean;
@@ -22,16 +22,17 @@ const CalendarDay = ({
   hasAppointments,
 }: Props) => {
   const day = date.getDate();
+  const { mainColor, dayNamesOverride } = useContext(OverrideDataContext);
 
   const getDate = (dateInput: Date) => {
-    return dayNames[dateInput.getDay()];
+    return dayNamesOverride[dateInput.getDay()];
   };
 
   const getColorOfDay = useCallback(() => {
     if (isSelected) return theme.colors.white;
-    if (isToday) return activeColor;
+    if (isToday) return mainColor;
     return theme.colors.primary900;
-  }, [isSelected, isToday]);
+  }, [isSelected, isToday, mainColor]);
 
   return (
     <Touchable
@@ -44,7 +45,7 @@ const CalendarDay = ({
         style={[
           styles.day,
           isToday ? styles.todayBackground : styles.defaultBackground,
-          isSelected ? { backgroundColor: activeColor } : styles.day,
+          isSelected ? { backgroundColor: mainColor } : styles.day,
         ]}
       >
         <Text
@@ -62,7 +63,7 @@ const CalendarDay = ({
               styles.todayDot,
               isSelected
                 ? styles.todayBackground
-                : { backgroundColor: activeColor },
+                : { backgroundColor: mainColor },
             ]}
           />
         )}

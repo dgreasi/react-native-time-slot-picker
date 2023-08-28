@@ -1,9 +1,9 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { IAppointment, IAvailableDates } from '../interfaces/app.interface';
 import ScheduleDateElement from './ScheduleDateElement';
 import { theme } from '../utils/theme';
-import { monthNames } from '../utils/store';
+import { OverrideDataContext } from './LocalContext';
 
 interface Props {
   availableDates: IAvailableDates[];
@@ -28,7 +28,8 @@ const ScheduleDatePicker = ({
   backgroundColor = theme.colors.white,
 }: Props) => {
   const scrollRef = useRef<any>();
-  const currentMonth = monthNames[today.getMonth()];
+  const { monthNamesOverride } = useContext(OverrideDataContext);
+  const currentMonth = monthNamesOverride[today.getMonth()];
 
   const onDatePress = (date: IAvailableDates) => {
     setSelectedDate(date);

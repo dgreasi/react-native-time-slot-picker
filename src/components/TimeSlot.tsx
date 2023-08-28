@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { activeColor, defaultTimeSlotWidth } from '../utils/store';
 import { theme } from '../utils/theme';
 import {
+  OverrideDataContext,
   ScheduledAppointmentContext,
   SelectedDateContext,
 } from './LocalContext';
@@ -17,19 +17,18 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
   const isSelected = selectedTime === value;
   const scheduledAppointment = useContext(ScheduledAppointmentContext);
   const selectedDate = useContext(SelectedDateContext);
+  const { mainColor, timeSlotWidth } = useContext(OverrideDataContext);
 
   const appointmentDot = useMemo(() => {
     return (
       <View
         style={[
           styles.todayDot,
-          isSelected
-            ? styles.todayBackground
-            : { backgroundColor: activeColor },
+          isSelected ? styles.todayBackground : { backgroundColor: mainColor },
         ]}
       />
     );
-  }, [isSelected]);
+  }, [isSelected, mainColor]);
 
   const getAppointmentDot: () => React.JSX.Element | null = useCallback(() => {
     if (scheduledAppointment?.appointmentDate) {
@@ -55,8 +54,8 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
       <View
         style={[
           styles.container,
-          { width: defaultTimeSlotWidth },
-          isSelected ? { backgroundColor: activeColor } : styles.unSelected,
+          { width: timeSlotWidth },
+          isSelected ? { backgroundColor: mainColor } : styles.unSelected,
         ]}
       >
         <Text

@@ -38,7 +38,20 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "timeslot",
+    "time-slot",
+    "timeslots",
+    "time-slots",
+    "time",
+    "slots",
+    "slot",
+    "picker",
+    "time-slot-picker",
+    "timeslot-picker",
+    "date",
+    "date-picker",
+    "datepicker"
   ],
   "repository": "https://github.com/dgreasi/react-native-time-slot-picker",
   "author": "Dimitrios Greasidis <dgreasidis@gmail.com> (https://github.com/dgreasi)",

@@ -135,3 +135,9 @@ MIT
 [expo-image]: https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000
 [expo-url]: https://expo.io
 [npm-downloads]: https://img.shields.io/npm/dm/@dgreasi/react-native-time-slot-picker?style=flat-square
+
+## [Roadmap]
+
+- Update logic for getAppointmentDay() to show dot in dates.
+- Add translations for weekdays/months.
+- Add dot in time slot to show already existed appointment.

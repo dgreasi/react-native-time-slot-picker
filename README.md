@@ -136,7 +136,7 @@ MIT
 [expo-url]: https://expo.io
 [npm-downloads]: https://img.shields.io/npm/dm/@dgreasi/react-native-time-slot-picker?style=flat-square
 
-## [Roadmap]
+## Roadmap
 
 - Update logic for getAppointmentDay() to show dot in dates.
 - Add translations for weekdays/months.

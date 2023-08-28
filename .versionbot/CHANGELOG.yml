@@ -1,4 +1,15 @@
 - commits:
+    - subject: "chore: update flowzone config"
+      hash: aa0967f664a004c3927d85fcf0644cdb8867ac59
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+  version: 0.1.3
+  title: ""
+  date: 2023-08-28T09:04:11.835Z
+- commits:
     - subject: "feat: refactor store data to local context"
       hash: c458f53968ffd7dd7464a82c0e8af5c04072991b
       body: ""

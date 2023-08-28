@@ -1,4 +1,24 @@
 - commits:
+    - subject: "chore: update versionist template"
+      hash: bac63664dd3f48455196be24ddea5aae68994edb
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "chore: update readme"
+      hash: 4d328259299dd629d4976fa4410ebe44944addf4
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+  version: 0.1.4
+  title: ""
+  date: 2023-08-28T09:36:17.569Z
+- commits:
     - subject: "chore: update flowzone config"
       hash: aa0967f664a004c3927d85fcf0644cdb8867ac59
       body: ""

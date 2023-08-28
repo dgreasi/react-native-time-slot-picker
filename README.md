@@ -40,7 +40,7 @@ yarn add @dgreasi/react-native-time-slot-picker
 
 ```tsx
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import {
   IAppointment,
   IAvailableDates,
@@ -76,25 +76,15 @@ export default function App() {
   }, [dateOfAppointment]);
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        <TimeSlotPicker
-          availableDates={availableDates}
-          setDateOfAppointment={setDateOfAppointment}
-        />
-      </SafeAreaView>
-    </View>
+    <SafeAreaView>
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
+      <TimeSlotPicker
+        availableDates={availableDates}
+        setDateOfAppointment={setDateOfAppointment}
+      />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-  },
-});
 ```
 
 You can find a set of detailed examples [here](example/src/App.tsx).
@@ -138,4 +128,5 @@ MIT
 
 ## Roadmap
 
-- Update logic for getAppointmentDay() to show dot in dates.
+- Update logic of getAppointmentDay() to show dot in dates.
+- Merge providers for performance improvement.

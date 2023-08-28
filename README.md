@@ -139,5 +139,3 @@ MIT
 ## Roadmap
 
 - Update logic for getAppointmentDay() to show dot in dates.
-- Add translations for weekdays/months.
-- Add dot in time slot to show already existed appointment.

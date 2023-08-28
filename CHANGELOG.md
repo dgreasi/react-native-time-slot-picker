@@ -9,15 +9,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * chore: update versionist template [Dgreasidis]
 * chore: update readme [Dgreasidis]
 
-## v0.1.3 - 2023-08-28
+## 0.1.3 - 2023-08-28
 
 * chore: update flowzone config [Dgreasidis]
 
-## v0.1.2 - 2023-08-28
+## 0.1.2 - 2023-08-28
 
 * feat: refactor store data to local context [Dgreasidis]
 
-## v0.1.1 - 2023-08-28
+## 0.1.1 - 2023-08-28
 
 * chore: add flowzone [Dgreasidis]
 

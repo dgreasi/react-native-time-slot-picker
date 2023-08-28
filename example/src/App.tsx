@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import {
   IAppointment,
@@ -12,10 +12,6 @@ export default function App() {
   const [dateOfAppointment, setDateOfAppointment] =
     useState<IAppointment | null>(null);
 
-  useEffect(() => {
-    console.log('Date of appointment updated: ', dateOfAppointment);
-  }, [dateOfAppointment]);
-
   return (
     <SafeAreaView>
       <StatusBar backgroundColor="transparent" barStyle="dark-content" />
@@ -26,7 +22,7 @@ export default function App() {
         // marginTop={24}
         // datePickerBackgroundColor="#F4CC58"
         // timeSlotsBackgroundColor="#F4CC58"
-        mainColor="#B4CC51"
+        // mainColor="#B4CC51"
         // timeSlotWidth={116}
         // dayNamesOverride={greekDayNames}
         // monthNamesOverride={greekMonthNames}

@@ -10,6 +10,13 @@ export const SelectedTimeSlot = ({ dateOfAppointment }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.boldFont}>Selected time slot</Text>
+      <Text style={styles.boldFont}>Interface</Text>
+      <Text style={{ fontStyle: 'italic' }}>
+        interface IAppointment &#123; {'\n'}
+        {'  '}appointmentDate: string;{'\n'}
+        {'  '}
+        appointmentTime: string;{'\n'}&#125;
+      </Text>
       <View style={styles.valueContainer}>
         <Text style={styles.boldFont}>appointmentDate: </Text>
         <View style={styles.borderOfValue}>

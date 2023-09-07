@@ -1,4 +1,32 @@
 - commits:
+    - subject: "chore: add example of language override in Spanish"
+      hash: 76750f9e866d5a1430616664a6ca7a295495fcbb
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "chore: add `react-native-safe-area-context` to example and snack"
+      hash: 2bb9f673577a99fd27ab2db34f839306040c48b4
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "chore: update docs"
+      hash: 408bff5d965c80e590e960095d1ec22442804202
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+  version: 0.1.6
+  title: ""
+  date: 2023-09-07T12:36:20.246Z
+- commits:
     - subject: "chore: update readme"
       hash: 953c705fa2f3773d0213a7b09c9408585ac629b0
       body: ""

@@ -14,19 +14,33 @@
 - Change the title of the timeslots section by using the params.
 - Change the width of timeslot element by using the params.
 
+
+## Table of contents
+
+- [Changelog](CHANGELOG.md)
+- [Screenshots](#screenshots)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Props](#props)
+- [Interfaces](#interfaces)
+
+## Screenshots
+
 [<img src="example/screenshots/1.png" width="180"/>](example/screenshots/1.png)
 [<img src="example/screenshots/2.png" width="180"/>](example/screenshots/2.png)
 [<img src="example/screenshots/3.png" width="180"/>](example/screenshots/3.png)
 [<img src="example/screenshots/4.png" width="180"/>](example/screenshots/4.png)
 [<img src="example/screenshots/5.png" width="180"/>](example/screenshots/5.png)
 
-## Table of contents
+> You can test the library by opening the following snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Props](#props)
-- [Interfaces](#interfaces)
-- [Changelog](CHANGELOG.md)
+## Run example locally
+```shell
+git clone https://github.com/dgreasi/react-native-time-slot-picker.git
+cd react-native-time-slot-picker
+npm i # or `yarn`
+npm run example ios # or `yarn example ios`
+```
 
 ## Installation
 
@@ -87,11 +101,9 @@ export default function App() {
 }
 ```
 
-You can find a set of detailed examples [here](example/src/App.tsx).
+You can find a detailed example [here](example/src/App.tsx).
 
-Also, a running snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
-
-# Props
+## Props
 
 | Prop name                   | Description                                                                                                                 | Type                                                  | Default                                                                                                                      |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -107,12 +119,19 @@ Also, a running snack [here](https://snack.expo.dev/@dgreasi/react-native-time-s
 | `dayNamesOverride`          | Day string array to override letters for each Calendar day. First day is Sunday.                                            | `string[]`                                            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']`                                                                                        |
 | `monthNamesOverride`        | Month string array to override default month names that are used as title.                                                  | `string[]`                                            | `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']` |
 
-# Interfaces
+## Interfaces
 
 | Name              | Description                                              |
 | ----------------- | -------------------------------------------------------- |
 | `IAvailableDates` | `{ day: number, slotDate: string, slotTimes: string[] }` |
 | `IAppointment`    | `{ appointmentDate: string, appointmentTime: string }`   |
+
+## Roadmap
+
+- Hide list if no `availableDates` list is passed.
+- Remove default `availableDates`.
+- Update logic of getAppointmentDay() to show dot in dates.
+- Merge providers for performance improvement.
 
 ## License
 
@@ -123,10 +142,6 @@ MIT
 [license-url]: https://img.shields.io/npm/l/@dgreasi/react-native-time-slot-picker?style=flat-square
 [types-url]: https://img.shields.io/badge/types-included-blue?style=flat-square
 [expo-image]: https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000
-[expo-url]: https://expo.io
+[expo-url]: https://snack.expo.dev/@dgreasi/react-native-time-slot-picker
 [npm-downloads]: https://img.shields.io/npm/dm/@dgreasi/react-native-time-slot-picker?style=flat-square
 
-## Roadmap
-
-- Update logic of getAppointmentDay() to show dot in dates.
-- Merge providers for performance improvement.

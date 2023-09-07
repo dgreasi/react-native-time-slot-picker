@@ -101,3 +101,20 @@ export const greekMonthNames = [
   'Νοέμβριος',
   'Δεκέμβριος',
 ];
+
+export const spanishDayNames = ['D', 'L', 'Ma', 'Mi', 'J', 'V', 'S'];
+
+export const spanishMonthNames = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];

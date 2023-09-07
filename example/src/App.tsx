@@ -28,6 +28,8 @@ export default function App() {
           // timeSlotWidth={116}
           // dayNamesOverride={greekDayNames}
           // monthNamesOverride={greekMonthNames}
+          // dayNamesOverride={spanishDayNames}
+          // monthNamesOverride={spanishMonthNames}
         />
         <SelectedTimeSlot dateOfAppointment={dateOfAppointment} />
       </SafeAreaView>

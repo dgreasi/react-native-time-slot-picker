@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { IAvailableDates } from '../interfaces/app.interface';
 import CalendarDay from './CalendarDay';
 
 interface ScheduleDateElementProps {
-  date: IAvailableDates;
+  slotDate: IAvailableDates;
   selectedDate?: IAvailableDates;
   onPress: () => void;
   currentDay: number;
@@ -11,24 +11,27 @@ interface ScheduleDateElementProps {
 }
 
 const ScheduleDateElement = ({
-  date,
+  slotDate,
   onPress,
   selectedDate,
   currentDay,
   appointmentDay,
 }: ScheduleDateElementProps) => {
-  const day = new Date(date.slotDate).getDate();
-  const isAppointmentToday = appointmentDay === day;
+  const day = useMemo(() => new Date(slotDate.date).getDate(), [slotDate.date]);
+  const isAppointmentToday = useMemo(
+    () => appointmentDay === day,
+    [appointmentDay, day]
+  );
 
   const isSelected = useCallback(() => {
-    return date.slotDate === selectedDate?.slotDate;
-  }, [date.slotDate, selectedDate?.slotDate]);
+    return slotDate.date === selectedDate?.date;
+  }, [slotDate.date, selectedDate?.date]);
 
   return (
     <CalendarDay
-      disabled={date.slotTimes.length === 0}
+      disabled={slotDate.slotTimes.length === 0}
       onPress={onPress}
-      date={new Date(date.slotDate)}
+      date={slotDate.date}
       isSelected={isSelected()}
       isToday={currentDay === day}
       hasAppointments={isAppointmentToday}

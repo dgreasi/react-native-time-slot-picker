@@ -6,8 +6,8 @@ import {
   IAppointment,
   TimeSlotPicker,
 } from '@dgreasi/react-native-time-slot-picker';
-import { bookedData, dummyAvailableDates } from './data';
 import { SelectedTimeSlot } from './SelectedTimeSlot';
+import { bookedData, dummyAvailableDates } from './data';
 
 export default function App() {
   const [dateOfAppointment, setDateOfAppointment] =
@@ -18,9 +18,9 @@ export default function App() {
       <SafeAreaView>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" />
         <TimeSlotPicker
-          availableDates={dummyAvailableDates}
           setDateOfAppointment={setDateOfAppointment}
           scheduledAppointment={bookedData}
+          availableDates={dummyAvailableDates}
           // marginTop={24}
           // datePickerBackgroundColor="#F4CC58"
           // timeSlotsBackgroundColor="#F4CC58"

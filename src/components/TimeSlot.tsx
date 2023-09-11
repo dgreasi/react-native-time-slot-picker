@@ -19,6 +19,15 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
   const selectedDate = useContext(SelectedDateContext);
   const { mainColor, timeSlotWidth } = useContext(OverrideDataContext);
 
+  const appointmentDateToCompare = useMemo(
+    () => scheduledAppointment?.appointmentDate?.split('T')[0],
+    [scheduledAppointment?.appointmentDate]
+  );
+  const selectedDateToCompare = useMemo(
+    () => selectedDate.split('T')[0],
+    [selectedDate]
+  );
+
   const appointmentDot = useMemo(() => {
     return (
       <View
@@ -30,14 +39,11 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
     );
   }, [isSelected, mainColor]);
 
+  // Check if there is an appointment to mark time slot appropriately
   const getAppointmentDot: () => React.JSX.Element | null = useCallback(() => {
     if (scheduledAppointment?.appointmentDate) {
-      const appointmentDate = new Date(
-        scheduledAppointment?.appointmentDate
-      ).toDateString();
-
       if (
-        selectedDate === appointmentDate &&
+        selectedDateToCompare === appointmentDateToCompare &&
         scheduledAppointment.appointmentTime === value
       ) {
         return appointmentDot;
@@ -45,9 +51,13 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
     }
 
     return null;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appointmentDot, scheduledAppointment, selectedDate]);
+  }, [
+    appointmentDot,
+    scheduledAppointment,
+    appointmentDateToCompare,
+    selectedDateToCompare,
+    value,
+  ]);
 
   return (
     <TouchableOpacity onPress={onPress}>

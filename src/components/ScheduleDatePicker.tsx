@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { IAppointment, IAvailableDates } from '../interfaces/app.interface';
 import ScheduleDateElement from './ScheduleDateElement';
@@ -17,8 +17,6 @@ interface Props {
 const today = new Date();
 const currentDay = today.getDate();
 
-// TODO: add args for current month, current day titles
-
 const ScheduleDatePicker = ({
   availableDates,
   selectedDate,
@@ -29,7 +27,15 @@ const ScheduleDatePicker = ({
 }: Props) => {
   const scrollRef = useRef<any>();
   const { monthNamesOverride } = useContext(OverrideDataContext);
-  const currentMonth = monthNamesOverride[today.getMonth()];
+  const currentMonth = useMemo(
+    () => monthNamesOverride[today.getMonth()],
+    [monthNamesOverride]
+  );
+
+  const getScheduledAppointmentDate = useCallback(
+    (date) => new Date(date).getDate(),
+    []
+  );
 
   const onDatePress = (date: IAvailableDates) => {
     setSelectedDate(date);
@@ -38,17 +44,17 @@ const ScheduleDatePicker = ({
 
   const getAppointmentDay: () => number = useCallback(() => {
     if (scheduledAppointment?.appointmentDate) {
-      return new Date(scheduledAppointment?.appointmentDate).getDate();
+      return getScheduledAppointmentDate(scheduledAppointment?.appointmentDate);
     }
 
     return -1;
-  }, [scheduledAppointment?.appointmentDate]);
+  }, [scheduledAppointment?.appointmentDate, getScheduledAppointmentDate]);
 
   const dateContainer = (date: IAvailableDates, index: number) => {
     return (
       <View key={index}>
         <ScheduleDateElement
-          date={date}
+          slotDate={date}
           selectedDate={selectedDate}
           onPress={() => {
             onDatePress(date);

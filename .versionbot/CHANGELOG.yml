@@ -1,4 +1,33 @@
 - commits:
+    - subject: "chore: update example"
+      hash: c42224f34aacb336e44d8d6af0e10cbf94ed34d5
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "chore: update readme"
+      hash: 5cbe637f6bc905d2f876010be3f09edab9c7ef6d
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "feat: (**breaking**) update interface and refactor"
+      hash: 69010f5830e8b78a8d6ccd338151120f5cb3807e
+      body: |
+        - reduce size of `IAvailableDates` arguments
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Dgreasidis
+      nested: []
+  version: 0.2.0
+  title: ""
+  date: 2023-09-11T15:11:45.425Z
+- commits:
     - subject: "chore: add example of language override in Spanish"
       hash: 76750f9e866d5a1430616664a6ca7a295495fcbb
       body: ""

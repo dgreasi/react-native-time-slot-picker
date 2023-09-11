@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../utils/theme';
 import Touchable from './Touchable';
@@ -7,7 +7,7 @@ import { OverrideDataContext } from './LocalContext';
 interface Props {
   disabled: boolean;
   onPress: () => void;
-  date: Date;
+  date: string;
   isSelected: boolean;
   isToday: boolean;
   hasAppointments: boolean;
@@ -21,12 +21,15 @@ const CalendarDay = ({
   isToday,
   hasAppointments,
 }: Props) => {
-  const day = date.getDate();
   const { mainColor, dayNamesOverride } = useContext(OverrideDataContext);
 
-  const getDate = (dateInput: Date) => {
-    return dayNamesOverride[dateInput.getDay()];
-  };
+  const dateObject = useMemo(() => new Date(date), [date]);
+  const day = useMemo(() => dateObject.getDate(), [dateObject]);
+  const dayNumberOfWeek = useMemo(() => dateObject.getDay(), [dateObject]);
+
+  const getDate = useCallback(() => {
+    return dayNamesOverride[dayNumberOfWeek];
+  }, [dayNamesOverride, dayNumberOfWeek]);
 
   const getColorOfDay = useCallback(() => {
     if (isSelected) return theme.colors.white;
@@ -40,7 +43,7 @@ const CalendarDay = ({
       onPress={onPress}
       style={styles.dateContainer}
     >
-      <Text style={styles.dayTitle}>{getDate(date)}</Text>
+      <Text style={styles.dayTitle}>{getDate()}</Text>
       <View
         style={[
           styles.day,

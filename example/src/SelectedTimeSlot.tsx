@@ -13,7 +13,7 @@ export const SelectedTimeSlot = ({ dateOfAppointment }: Props) => {
       <Text style={styles.boldFont}>Interface</Text>
       <Text style={{ fontStyle: 'italic' }}>
         interface IAppointment &#123; {'\n'}
-        {'  '}appointmentDate: string;{'\n'}
+        {'  '}appointmentDate: string; `ISOString()`{'\n'}
         {'  '}
         appointmentTime: string;{'\n'}&#125;
       </Text>

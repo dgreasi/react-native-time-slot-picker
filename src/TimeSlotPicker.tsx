@@ -13,8 +13,8 @@ import {
 import { LocalContext } from './components/LocalContext';
 
 interface Props {
-  availableDates: IAvailableDates[];
   setDateOfAppointment: (data: IAppointment | null) => void;
+  availableDates?: IAvailableDates[];
   scheduledAppointment?: IAppointment | undefined;
   marginTop?: number;
   datePickerBackgroundColor?: string;
@@ -25,8 +25,6 @@ interface Props {
   dayNamesOverride?: string[];
   monthNamesOverride?: string[];
 }
-
-// TODO: Remove default value from `availableDates`
 
 const TimeSlotPicker = ({
   availableDates = fixedAvailableDates,
@@ -58,7 +56,7 @@ const TimeSlotPicker = ({
   useEffect(() => {
     if (selectedDate && selectedTime) {
       setDateOfAppointment({
-        appointmentDate: selectedDate.slotDate,
+        appointmentDate: selectedDate.date,
         appointmentTime: selectedTime,
       });
     } else {
@@ -69,7 +67,7 @@ const TimeSlotPicker = ({
 
   return (
     <LocalContext
-      slotDate={selectedDate?.slotDate || ''}
+      slotDate={selectedDate?.date || ''}
       scheduledAppointment={scheduledAppointment}
       overrideData={{
         mainColor,

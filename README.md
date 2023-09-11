@@ -14,7 +14,6 @@
 - Change the title of the timeslots section by using the params.
 - Change the width of timeslot element by using the params.
 
-
 ## Table of contents
 
 - [Changelog](CHANGELOG.md)
@@ -35,6 +34,7 @@
 > You can test the library by opening the following snack [here](https://snack.expo.dev/@dgreasi/react-native-time-slot-picker).
 
 ## Run example locally
+
 ```shell
 git clone https://github.com/dgreasi/react-native-time-slot-picker.git
 cd react-native-time-slot-picker
@@ -64,28 +64,26 @@ import { useEffect, useState } from 'react';
 
 const availableDates: IAvailableDates[] = [
   {
-    day: 18, // new Date().getDate()
-    slotDate: 'Fri Aug 18 2023', // new Date().toDateString()
+    date: '2023-08-17T21:00:00.000Z', // new Date().toISOString()
     slotTimes: ['08:00-09:00', '09:00-10:00'], // Array<string> of time slots
   },
   {
-    day: 19,
-    slotDate: 'Sat Aug 19 2023',
+    date: '2023-08-18T21:00:00.000Z',
     slotTimes: [], // No availability
   },
   {
-    day: 20,
-    slotDate: 'Sun Aug 20 2023',
+    date: '2023-08-19T21:00:00.000Z',
     slotTimes: ['08:00-09:00', '09:00-10:00'],
   },
 ];
 
 export default function App() {
-  const [dateOfAppointment, setDateOfAppointment] = useState<IAppointment | null>(null);
+  const [dateOfAppointment, setDateOfAppointment] =
+    useState<IAppointment | null>(null);
 
   useEffect(() => {
-    // Contains the selected time slot in the following format
-    // {"appointmentDate": "Fri Aug 18 2023", "appointmentTime": "18:00-19:00"}
+    // Contains the selected date, time slot in the following format
+    // {"appointmentDate": "2023-08-17T21:00:00.000Z", "appointmentTime": "18:00-19:00"}
     console.log('Date of appointment updated: ', dateOfAppointment);
   }, [dateOfAppointment]);
 
@@ -105,31 +103,30 @@ You can find a detailed example [here](example/src/App.tsx).
 
 ## Props
 
-| Prop name                   | Description                                                                                                                 | Type                                                  | Default                                                                                                                      |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `availableDates`            | The array of the available slot times per date.                                                                             | `IAvailableDates[]`                                   | **REQUIRED**                                                                                                                 |
-| `setDateOfAppointment`      | A component to use on top of header image. It can also be used without header image to render a custom component as header. | `(data: IAddScheduleAppointmentBody \| null) => void` | **REQUIRED**                                                                                                                 |
-| `scheduledAppointment`      | An already existed appointment, which is going to be mark the specific date `with appointment`.                             | `IGetScheduleCallResponse`                            | `undefined`                                                                                                                  |
-| `marginTop`                 | Margin top for the whole component.                                                                                         | `number`                                              | `0`                                                                                                                          |
-| `datePickerBackgroundColor` | Background color of the section with the horizontal scroll, which contains the days.                                        | `hex string`                                          | `'#FFFFFF'`                                                                                                                  |
-| `timeSlotsBackgroundColor`  | Background color of the section that contains the time slots.                                                               | `hex string`                                          | `'#FFFFFF'`                                                                                                                  |
-| `timeSlotsTitle`            | Title of section that contains the                                                                                          | `string`                                              | `'Select time'`                                                                                                              |
-| `mainColor`                 | Main color of the time slot picker                                                                                          | `hex string`                                          | `'#04060A'`                                                                                                                  |
-| `timeSlotWidth`             | Time slot pill width                                                                                                        | `number`                                              | `96`                                                                                                                         |
-| `dayNamesOverride`          | Day string array to override letters for each Calendar day. First day is Sunday.                                            | `string[]`                                            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']`                                                                                        |
-| `monthNamesOverride`        | Month string array to override default month names that are used as title.                                                  | `string[]`                                            | `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']` |
+| Prop name                   | Description                                                                                                                 | Type                                   | Default                                                                                                                      |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `setDateOfAppointment`      | A component to use on top of header image. It can also be used without header image to render a custom component as header. | `(data: IAppointment \| null) => void` | **REQUIRED**                                                                                                                 |
+| `availableDates`            | The array of the available slot times per date.                                                                             | `IAvailableDates[]`                    | [fixedAvailableDates](src/utils/dateHelpers.ts)                                                                              |
+| `scheduledAppointment`      | An already existed appointment, which is going to mark the specific date as `with appointment`.                             | `IAppointment`                         | `undefined`                                                                                                                  |
+| `marginTop`                 | Margin top for the whole component.                                                                                         | `number`                               | `0`                                                                                                                          |
+| `datePickerBackgroundColor` | Background color of the section with the horizontal scroll, which contains the days.                                        | `hex string`                           | `'#FFFFFF'`                                                                                                                  |
+| `timeSlotsBackgroundColor`  | Background color of the section that contains the time slots.                                                               | `hex string`                           | `'#FFFFFF'`                                                                                                                  |
+| `timeSlotsTitle`            | Title of section that contains the                                                                                          | `string`                               | `'Select time'`                                                                                                              |
+| `mainColor`                 | Main color of the time slot picker                                                                                          | `hex string`                           | `'#04060A'`                                                                                                                  |
+| `timeSlotWidth`             | Time slot pill width                                                                                                        | `number`                               | `96`                                                                                                                         |
+| `dayNamesOverride`          | Day string array to override letters for each Calendar day. First day is Sunday.                                            | `string[]`                             | `['S', 'M', 'T', 'W', 'T', 'F', 'S']`                                                                                        |
+| `monthNamesOverride`        | Month string array to override default month names that are used as title.                                                  | `string[]`                             | `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']` |
 
 ## Interfaces
 
-| Name              | Description                                              |
-| ----------------- | -------------------------------------------------------- |
-| `IAvailableDates` | `{ day: number, slotDate: string, slotTimes: string[] }` |
-| `IAppointment`    | `{ appointmentDate: string, appointmentTime: string }`   |
+| Name              | Description                                            |
+| ----------------- | ------------------------------------------------------ |
+| `IAvailableDates` | `{ date: string, slotTimes: string[] }`                |
+| `IAppointment`    | `{ appointmentDate: string, appointmentTime: string }` |
 
 ## Roadmap
 
-- Hide list if no `availableDates` list is passed.
-- Remove default `availableDates`.
+- Update `scheduledAppointment` arg to accept multiple appointments.
 - Update logic of getAppointmentDay() to show dot in dates.
 - Merge providers for performance improvement.
 
@@ -144,4 +141,3 @@ MIT
 [expo-image]: https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000
 [expo-url]: https://snack.expo.dev/@dgreasi/react-native-time-slot-picker
 [npm-downloads]: https://img.shields.io/npm/dm/@dgreasi/react-native-time-slot-picker?style=flat-square
-

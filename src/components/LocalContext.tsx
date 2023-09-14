@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { IAppointment } from '@dgreasi/react-native-time-slot-picker';
 import {
   defaultActiveColor,
@@ -15,12 +15,12 @@ interface IOverrideData {
   monthNamesOverride: string[];
 }
 
-export const SelectedDateContext = createContext<string>('');
-export const ScheduledAppointmentContext = createContext<
-  IAppointment | undefined
->(undefined);
+const SelectedDateContext = createContext<string>('');
+const ScheduledAppointmentContext = createContext<IAppointment | undefined>(
+  undefined
+);
 
-export const OverrideDataContext = createContext<IOverrideData>({
+const OverrideDataContext = createContext<IOverrideData>({
   mainColor: defaultActiveColor,
   timeSlotWidth: defaultTimeSlotWidth,
   dayNamesOverride: defaultDayNames,
@@ -49,4 +49,16 @@ export const LocalContext = ({
       </ScheduledAppointmentContext.Provider>
     </SelectedDateContext.Provider>
   );
+};
+
+export const useSelectedDateContext = () => {
+  return useContext(SelectedDateContext);
+};
+
+export const useScheduledAppointmentContext = () => {
+  return useContext(ScheduledAppointmentContext);
+};
+
+export const useOverrideDataContext = () => {
+  return useContext(OverrideDataContext);
 };

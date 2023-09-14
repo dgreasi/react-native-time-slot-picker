@@ -1,10 +1,10 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { theme } from '../utils/theme';
 import {
-  OverrideDataContext,
-  ScheduledAppointmentContext,
-  SelectedDateContext,
+  useOverrideDataContext,
+  useScheduledAppointmentContext,
+  useSelectedDateContext,
 } from './LocalContext';
 
 interface Props {
@@ -15,16 +15,16 @@ interface Props {
 
 const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
   const isSelected = selectedTime === value;
-  const scheduledAppointment = useContext(ScheduledAppointmentContext);
-  const selectedDate = useContext(SelectedDateContext);
-  const { mainColor, timeSlotWidth } = useContext(OverrideDataContext);
+  const selectedDate = useSelectedDateContext();
+  const { mainColor, timeSlotWidth } = useOverrideDataContext();
+  const scheduledAppointment = useScheduledAppointmentContext();
 
   const appointmentDateToCompare = useMemo(
     () => scheduledAppointment?.appointmentDate?.split('T')[0],
     [scheduledAppointment?.appointmentDate]
   );
   const selectedDateToCompare = useMemo(
-    () => selectedDate.split('T')[0],
+    () => selectedDate?.split('T')?.[0],
     [selectedDate]
   );
 

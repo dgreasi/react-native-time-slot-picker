@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../utils/theme';
 import Touchable from './Touchable';
-import { OverrideDataContext } from './LocalContext';
+import { useOverrideDataContext } from './LocalContext';
 
 interface Props {
   disabled: boolean;
@@ -21,7 +21,7 @@ const CalendarDay = ({
   isToday,
   hasAppointments,
 }: Props) => {
-  const { mainColor, dayNamesOverride } = useContext(OverrideDataContext);
+  const { mainColor, dayNamesOverride } = useOverrideDataContext();
 
   const dateObject = useMemo(() => new Date(date), [date]);
   const day = useMemo(() => dateObject.getDate(), [dateObject]);

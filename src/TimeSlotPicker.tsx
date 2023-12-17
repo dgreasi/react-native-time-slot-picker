@@ -13,9 +13,9 @@ import {
 import { LocalContext } from './components/LocalContext';
 
 interface Props {
-  setDateOfAppointment: (data: IAppointment | null) => void;
+  setScheduledAppointments: (data: IAppointment[] | null) => void;
   availableDates?: IAvailableDates[];
-  scheduledAppointment?: IAppointment | undefined;
+  scheduledAppointments?: IAppointment[];
   marginTop?: number;
   datePickerBackgroundColor?: string;
   timeSlotsBackgroundColor?: string;
@@ -28,8 +28,8 @@ interface Props {
 
 const TimeSlotPicker = ({
   availableDates = fixedAvailableDates,
-  setDateOfAppointment,
-  scheduledAppointment,
+  scheduledAppointments,
+  setScheduledAppointments,
   marginTop = 0,
   datePickerBackgroundColor,
   timeSlotsBackgroundColor,
@@ -39,36 +39,21 @@ const TimeSlotPicker = ({
   dayNamesOverride = defaultDayNames,
   monthNamesOverride = defaultMonthNames,
 }: Props) => {
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState<IAvailableDates | undefined>(
-    availableDates[0]
+  const [selectedDay, setSelectedDay] = useState<string>(
+    scheduledAppointments && 
+    scheduledAppointments.length > 0 ? 
+    scheduledAppointments.sort((a, b) => {
+      return new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime();
+    })[0].appointmentDate : 
+    availableDates.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    })[0].date
   );
-
-  useEffect(() => {
-    // Get first day with available appointments
-    const firstAvailableDay =
-      availableDates.findIndex((date) => date.slotTimes.length > 0) || 0;
-    setSelectedDate(availableDates?.[firstAvailableDay]);
-    setSelectedTime(availableDates?.[firstAvailableDay]?.slotTimes?.[0] || '');
-  }, [availableDates]);
-
-  // If any changes on date and time selected update data of appointment
-  useEffect(() => {
-    if (selectedDate && selectedTime) {
-      setDateOfAppointment({
-        appointmentDate: selectedDate.date,
-        appointmentTime: selectedTime,
-      });
-    } else {
-      setDateOfAppointment(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDate, selectedTime]);
 
   return (
     <LocalContext
-      slotDate={selectedDate?.date || ''}
-      scheduledAppointment={scheduledAppointment}
+      slotDate={selectedDay}
+      scheduledAppointments={scheduledAppointments}
       overrideData={{
         mainColor,
         timeSlotWidth,
@@ -79,20 +64,20 @@ const TimeSlotPicker = ({
       <View style={{ marginTop }}>
         <View>
           <ScheduleDatePicker
-            selectedDate={selectedDate}
+            selectedDay={selectedDay}
             availableDates={availableDates}
-            setSelectedDate={setSelectedDate}
-            setSelectedTime={setSelectedTime}
-            scheduledAppointment={scheduledAppointment}
+            setSelectedDay={setSelectedDay}
+            scheduledAppointments={scheduledAppointments}
             backgroundColor={datePickerBackgroundColor}
           />
         </View>
-        {selectedDate && (
+        {selectedDay && (
           <TimeSlots
             title={timeSlotsTitle}
-            selectedTime={selectedTime}
-            setSelectedTime={setSelectedTime}
-            slotTimes={selectedDate.slotTimes}
+            selectedDay={selectedDay}
+            slotTimes={availableDates.find((data) => data.date === selectedDay)?.slotTimes || []}
+            scheduledAppointments={scheduledAppointments}
+            setScheduledAppointments={setScheduledAppointments}
             backgroundColor={timeSlotsBackgroundColor}
           />
         )}

@@ -2,27 +2,43 @@ import React, { useCallback } from 'react';
 import TimeSlot from './TimeSlot';
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../utils/theme';
+import { IAppointment } from '../interfaces/app.interface';
 
 interface Props {
+  selectedDay: string;
   slotTimes: string[];
-  selectedTime: string;
-  setSelectedTime: (value: string) => void;
+  scheduledAppointments: IAppointment[] | undefined;
+  setScheduledAppointments: (value: IAppointment[] | null) => void;
   title?: string;
   backgroundColor?: string;
   mainColor?: string;
 }
 
 const TimeSlots = ({
+  selectedDay,
   slotTimes,
-  selectedTime,
-  setSelectedTime,
+  scheduledAppointments,
+  setScheduledAppointments,
   title = 'Select time',
   backgroundColor = theme.colors.white,
 }: Props) => {
   const onPress = (value: string) => {
-    setSelectedTime(value);
+    if (!scheduledAppointments) setScheduledAppointments([{ 
+      appointmentDate: selectedDay,
+      appointmentTime: value,
+     }]);
+    else {
+      const isAlreadyScheduled = scheduledAppointments.find((data) => data.appointmentTime === value);
+      if (isAlreadyScheduled) {
+        setScheduledAppointments(scheduledAppointments.filter((data) => data.appointmentTime !== value));
+      } else {
+        setScheduledAppointments([...scheduledAppointments, {
+          appointmentDate: selectedDay,
+          appointmentTime: value,
+        }]);
+      }
+    }
   };
-
   const getTimeSlots = useCallback(() => {
     return slotTimes.map((time) => {
       return (
@@ -30,13 +46,12 @@ const TimeSlots = ({
           <TimeSlot
             onPress={() => onPress(time)}
             value={time}
-            selectedTime={selectedTime}
           />
         </View>
       );
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slotTimes, selectedTime]);
+  }, [slotTimes, scheduledAppointments]);
 
   return (
     <View style={[styles.container, { backgroundColor }]}>

@@ -4,28 +4,28 @@ import CalendarDay from './CalendarDay';
 
 interface ScheduleDateElementProps {
   slotDate: IAvailableDates;
-  selectedDate?: IAvailableDates;
-  onPress: () => void;
+  selectedDay: string;
   currentDay: number;
-  appointmentDay: number;
+  onPress: () => void;
+  appointmentDays: number[];
 }
 
 const ScheduleDateElement = ({
   slotDate,
-  onPress,
-  selectedDate,
+  selectedDay,
   currentDay,
-  appointmentDay,
+  onPress,
+  appointmentDays,
 }: ScheduleDateElementProps) => {
   const day = useMemo(() => new Date(slotDate.date).getDate(), [slotDate.date]);
   const isAppointmentToday = useMemo(
-    () => appointmentDay === day,
-    [appointmentDay, day]
+    () => day in appointmentDays,
+    [appointmentDays, day]
   );
 
   const isSelected = useCallback(() => {
-    return slotDate.date === selectedDate?.date;
-  }, [slotDate.date, selectedDate?.date]);
+    return slotDate.date === selectedDay;
+  }, [slotDate.date, selectedDay]);
 
   return (
     <CalendarDay

@@ -47,7 +47,7 @@ const ScheduleDatePicker = ({
       return schecduledDays;
 
     return [];
-  }, [scheduledAppointments?.map((data) => data.appointmentDate), getScheduledAppointmentsDate]);
+  }, [scheduledAppointments, getScheduledAppointmentsDate]);
 
   const dateContainer = (date: IAvailableDates, index: number) => {
     return (

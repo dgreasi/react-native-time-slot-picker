@@ -13,9 +13,11 @@ import {
 import { LocalContext } from './components/LocalContext';
 
 interface Props {
-  setScheduledAppointments: (data: IAppointment[] | null) => void;
   availableDates?: IAvailableDates[];
   scheduledAppointments?: IAppointment[];
+  setScheduledAppointments: (data: IAppointment[] | null) => void;
+  multipleSelection?: boolean;
+  multipleSelectionStrategy?: 'consecutive' | 'non-consecutive';
   marginTop?: number;
   datePickerBackgroundColor?: string;
   timeSlotsBackgroundColor?: string;
@@ -30,6 +32,8 @@ const TimeSlotPicker = ({
   availableDates = fixedAvailableDates,
   scheduledAppointments,
   setScheduledAppointments,
+  multipleSelection = false,
+  multipleSelectionStrategy = 'non-consecutive',
   marginTop = 0,
   datePickerBackgroundColor,
   timeSlotsBackgroundColor,
@@ -78,6 +82,8 @@ const TimeSlotPicker = ({
             slotTimes={availableDates.find((data) => data.date === selectedDay)?.slotTimes || []}
             scheduledAppointments={scheduledAppointments}
             setScheduledAppointments={setScheduledAppointments}
+            multipleSelection={multipleSelection}
+            multipleSelectionStrategy={multipleSelectionStrategy}
             backgroundColor={timeSlotsBackgroundColor}
           />
         )}

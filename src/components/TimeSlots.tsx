@@ -9,6 +9,8 @@ interface Props {
   slotTimes: string[];
   scheduledAppointments: IAppointment[] | undefined;
   setScheduledAppointments: (value: IAppointment[] | null) => void;
+  multipleSelection: boolean;
+  multipleSelectionStrategy: 'consecutive' | 'non-consecutive';
   title?: string;
   backgroundColor?: string;
   mainColor?: string;
@@ -19,23 +21,102 @@ const TimeSlots = ({
   slotTimes,
   scheduledAppointments,
   setScheduledAppointments,
+  multipleSelection,
+  multipleSelectionStrategy,
   title = 'Select time',
   backgroundColor = theme.colors.white,
 }: Props) => {
   const onPress = (value: string) => {
-    if (!scheduledAppointments) setScheduledAppointments([{ 
-      appointmentDate: selectedDay,
-      appointmentTime: value,
-     }]);
-    else {
-      const isAlreadyScheduled = scheduledAppointments.find((data) => data.appointmentTime === value);
-      if (isAlreadyScheduled) {
-        setScheduledAppointments(scheduledAppointments.filter((data) => data.appointmentTime !== value));
-      } else {
-        setScheduledAppointments([...scheduledAppointments, {
+    if (!scheduledAppointments || scheduledAppointments.length === 0)
+      setScheduledAppointments([
+        {
           appointmentDate: selectedDay,
           appointmentTime: value,
-        }]);
+        },
+      ]);
+    else {
+      if (!multipleSelection) {
+        if (scheduledAppointments[0].appointmentTime === value)
+          setScheduledAppointments(null);
+      } else {
+        const isAlreadyScheduled = scheduledAppointments.find(
+          (data) => data.appointmentTime === value
+        );
+        if (isAlreadyScheduled) {
+          if (multipleSelectionStrategy === 'non-consecutive')
+            setScheduledAppointments(
+              scheduledAppointments.filter(
+                (data) => data.appointmentTime !== value
+              )
+            );
+          else {
+            // only remove if it is not consecutive
+            const valueSplit = value.split('-');
+            const valueStartTime = valueSplit[0];
+            const valueEndTime = valueSplit[1];
+            const isConsecutive =
+              scheduledAppointments.find((data) => {
+                const dataSplit = data.appointmentTime.split('-');
+                const dataStartTime = dataSplit[0];
+                const dataEndTime = dataSplit[1];
+                if (data.appointmentDate === selectedDay) {
+                  if (dataStartTime === valueEndTime) return true;
+                }
+                return false;
+              }) &&
+              scheduledAppointments.find((data) => {
+                const dataSplit = data.appointmentTime.split('-');
+                const dataStartTime = dataSplit[0];
+                const dataEndTime = dataSplit[1];
+                if (data.appointmentDate === selectedDay) {
+                  if (dataEndTime === valueStartTime) return true;
+                }
+                return false;
+              });
+            if (!isConsecutive)
+              setScheduledAppointments(
+                scheduledAppointments.filter(
+                  (data) => data.appointmentTime !== value
+                )
+              );
+          }
+        } else {
+          if (multipleSelectionStrategy === 'non-consecutive')
+            setScheduledAppointments([
+              ...scheduledAppointments,
+              {
+                appointmentDate: selectedDay,
+                appointmentTime: value,
+              },
+            ]);
+          else {
+            const valueSplit = value.split('-');
+            const valueStartTime = valueSplit[0];
+            const valueEndTime = valueSplit[1];
+            const isConsecutive = scheduledAppointments.find((data) => {
+              const dataSplit = data.appointmentTime.split('-');
+              const dataStartTime = dataSplit[0];
+              const dataEndTime = dataSplit[1];
+              if (data.appointmentDate === selectedDay) {
+                if (
+                  dataStartTime === valueEndTime ||
+                  dataEndTime === valueStartTime
+                )
+                  return true;
+              }
+              return false;
+            });
+            if (isConsecutive) {
+              setScheduledAppointments([
+                ...scheduledAppointments,
+                {
+                  appointmentDate: selectedDay,
+                  appointmentTime: value,
+                },
+              ]);
+            }
+          }
+        }
       }
     }
   };
@@ -43,10 +124,7 @@ const TimeSlots = ({
     return slotTimes.map((time) => {
       return (
         <View style={styles.timeSlotContainer} key={time}>
-          <TimeSlot
-            onPress={() => onPress(time)}
-            value={time}
-          />
+          <TimeSlot onPress={() => onPress(time)} value={time} />
         </View>
       );
     });

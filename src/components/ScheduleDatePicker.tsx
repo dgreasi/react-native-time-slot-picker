@@ -43,8 +43,7 @@ const ScheduleDatePicker = ({
     const schecduledDays = scheduledAppointments?.map((data) =>
       getScheduledAppointmentsDate(data.appointmentDate)
     );
-    if (schecduledDays?.length) 
-      return schecduledDays;
+    if (schecduledDays?.length) return schecduledDays;
 
     return [];
   }, [scheduledAppointments, getScheduledAppointmentsDate]);

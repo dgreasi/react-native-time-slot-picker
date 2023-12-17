@@ -10,17 +10,19 @@ import { SelectedTimeSlot } from './SelectedTimeSlot';
 import { bookedData, dummyAvailableDates } from './data';
 
 export default function App() {
-  const [dateOfAppointment, setDateOfAppointment] =
-    useState<IAppointment | null>(null);
+  const [scheduledAppointments, setScheduledAppointments] = useState<
+    IAppointment[]
+  >([bookedData]);
 
   return (
     <SafeAreaProvider>
       <SafeAreaView>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" />
         <TimeSlotPicker
-          setDateOfAppointment={setDateOfAppointment}
-          scheduledAppointment={bookedData}
+          scheduledAppointments={scheduledAppointments}
+          setScheduledAppointments={setScheduledAppointments}
           availableDates={dummyAvailableDates}
+          multipleSelection
           // marginTop={24}
           // datePickerBackgroundColor="#F4CC58"
           // timeSlotsBackgroundColor="#F4CC58"
@@ -31,7 +33,7 @@ export default function App() {
           // dayNamesOverride={spanishDayNames}
           // monthNamesOverride={spanishMonthNames}
         />
-        <SelectedTimeSlot dateOfAppointment={dateOfAppointment} />
+        <SelectedTimeSlot scheduledAppointments={scheduledAppointments ?? []} />
       </SafeAreaView>
     </SafeAreaProvider>
   );

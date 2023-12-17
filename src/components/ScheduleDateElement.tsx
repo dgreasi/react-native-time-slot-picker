@@ -19,7 +19,7 @@ const ScheduleDateElement = ({
 }: ScheduleDateElementProps) => {
   const day = useMemo(() => new Date(slotDate.date).getDate(), [slotDate.date]);
   const isAppointmentToday = useMemo(
-    () => appointmentDays.find((data) => data === day) && day,
+    () => !!appointmentDays.find((data) => data === day),
     [appointmentDays, day]
   );
 

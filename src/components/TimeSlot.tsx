@@ -18,8 +18,9 @@ const TimeSlot = ({ value, onPress }: Props) => {
   const { mainColor, timeSlotWidth } = useContext(OverrideDataContext);
 
   const isSelected = scheduledAppointments?.find(
-    (appointment) => appointment.appointmentDate === selectedDay && 
-    appointment.appointmentTime === value
+    (appointment) =>
+      appointment.appointmentDate === selectedDay &&
+      appointment.appointmentTime === value
   );
 
   const appointmentDot = useMemo(() => {
@@ -35,16 +36,12 @@ const TimeSlot = ({ value, onPress }: Props) => {
 
   // Check if there is an appointment to mark time slot appropriately
   const getAppointmentDot: () => React.JSX.Element | null = useCallback(() => {
-      if (isSelected) {
-        return appointmentDot;
-      }
+    if (isSelected) {
+      return appointmentDot;
+    }
 
     return null;
-  }, [
-    appointmentDot,
-    scheduledAppointments,
-    value,
-  ]);
+  }, [appointmentDot, isSelected]);
 
   return (
     <TouchableOpacity onPress={onPress}>

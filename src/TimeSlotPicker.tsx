@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IAppointment, IAvailableDates } from './interfaces/app.interface';
 import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
@@ -15,9 +15,12 @@ import { LocalContext } from './components/LocalContext';
 interface Props {
   availableDates?: IAvailableDates[];
   scheduledAppointments?: IAppointment[];
-  setScheduledAppointments: (data: IAppointment[] | null) => void;
+  setScheduledAppointments: (data: IAppointment[]) => void;
   multipleSelection?: boolean;
-  multipleSelectionStrategy?: 'consecutive' | 'non-consecutive';
+  multipleSelectionStrategy?:
+    | 'consecutive'
+    | 'same-day-consecutive'
+    | 'non-consecutive';
   marginTop?: number;
   datePickerBackgroundColor?: string;
   timeSlotsBackgroundColor?: string;
@@ -43,15 +46,21 @@ const TimeSlotPicker = ({
   dayNamesOverride = defaultDayNames,
   monthNamesOverride = defaultMonthNames,
 }: Props) => {
+  const sortedAppointments = scheduledAppointments?.sort((a, b) => {
+    return (
+      new Date(a.appointmentDate).getTime() -
+      new Date(b.appointmentDate).getTime()
+    );
+  });
+  const sortedAvailableDates = availableDates.sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
   const [selectedDay, setSelectedDay] = useState<string>(
-    scheduledAppointments && 
-    scheduledAppointments.length > 0 ? 
-    scheduledAppointments.sort((a, b) => {
-      return new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime();
-    })[0].appointmentDate : 
-    availableDates.sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
-    })[0].date
+    sortedAppointments && sortedAppointments[0]
+      ? sortedAppointments[0].appointmentDate
+      : sortedAvailableDates && sortedAvailableDates[0]
+      ? sortedAvailableDates[0].date
+      : ''
   );
 
   return (
@@ -79,7 +88,10 @@ const TimeSlotPicker = ({
           <TimeSlots
             title={timeSlotsTitle}
             selectedDay={selectedDay}
-            slotTimes={availableDates.find((data) => data.date === selectedDay)?.slotTimes || []}
+            slotTimes={
+              availableDates.find((data) => data.date === selectedDay)
+                ?.slotTimes || []
+            }
             scheduledAppointments={scheduledAppointments}
             setScheduledAppointments={setScheduledAppointments}
             multipleSelection={multipleSelection}

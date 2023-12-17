@@ -8,9 +8,12 @@ interface Props {
   selectedDay: string;
   slotTimes: string[];
   scheduledAppointments: IAppointment[] | undefined;
-  setScheduledAppointments: (value: IAppointment[] | null) => void;
+  setScheduledAppointments: (value: IAppointment[]) => void;
   multipleSelection: boolean;
-  multipleSelectionStrategy: 'consecutive' | 'non-consecutive';
+  multipleSelectionStrategy:
+    | 'consecutive'
+    | 'same-day-consecutive'
+    | 'non-consecutive';
   title?: string;
   backgroundColor?: string;
   mainColor?: string;
@@ -36,8 +39,12 @@ const TimeSlots = ({
       ]);
     else {
       if (!multipleSelection) {
-        if (scheduledAppointments[0].appointmentTime === value)
-          setScheduledAppointments(null);
+        if (
+          scheduledAppointments &&
+          scheduledAppointments[0] &&
+          scheduledAppointments[0].appointmentTime === value
+        )
+          setScheduledAppointments([]);
       } else {
         const isAlreadyScheduled = scheduledAppointments.find(
           (data) => data.appointmentTime === value
@@ -58,7 +65,6 @@ const TimeSlots = ({
               scheduledAppointments.find((data) => {
                 const dataSplit = data.appointmentTime.split('-');
                 const dataStartTime = dataSplit[0];
-                const dataEndTime = dataSplit[1];
                 if (data.appointmentDate === selectedDay) {
                   if (dataStartTime === valueEndTime) return true;
                 }
@@ -66,7 +72,6 @@ const TimeSlots = ({
               }) &&
               scheduledAppointments.find((data) => {
                 const dataSplit = data.appointmentTime.split('-');
-                const dataStartTime = dataSplit[0];
                 const dataEndTime = dataSplit[1];
                 if (data.appointmentDate === selectedDay) {
                   if (dataEndTime === valueStartTime) return true;
@@ -97,7 +102,11 @@ const TimeSlots = ({
               const dataSplit = data.appointmentTime.split('-');
               const dataStartTime = dataSplit[0];
               const dataEndTime = dataSplit[1];
-              if (data.appointmentDate === selectedDay) {
+              if (
+                (multipleSelectionStrategy === 'same-day-consecutive' &&
+                  data.appointmentDate === selectedDay) ||
+                multipleSelectionStrategy === 'consecutive'
+              ) {
                 if (
                   dataStartTime === valueEndTime ||
                   dataEndTime === valueStartTime

@@ -111,9 +111,29 @@ const TimeSlots = ({
             let nextAvailableDate = availableDates.find(
               (data) =>
                 data.date === selectedDay &&
-                data.slotTimes.find(
-                  (slotTime) => slotTime.split('-')[0] === valueEndTime
-                )
+                data.slotTimes.find((slotTime) => {
+                  const valueStartTimeSplit = valueStartTime?.split(':');
+                  const slotTimeSplit = slotTime.split('-')[0]?.split(':');
+                  if (
+                    valueStartTimeSplit &&
+                    slotTimeSplit &&
+                    valueStartTimeSplit[0] &&
+                    valueStartTimeSplit[1] &&
+                    slotTimeSplit[0] &&
+                    slotTimeSplit[1]
+                  ) {
+                    const isSlotAfterSelectedTime =
+                      parseInt(valueStartTimeSplit[0], 10) * 60 +
+                        parseInt(valueStartTimeSplit[1], 10) <
+                      parseInt(slotTimeSplit[0], 10) * 60 +
+                        parseInt(slotTimeSplit[1], 10);
+                    return (
+                      slotTime.split('-')[0] === valueEndTime &&
+                      isSlotAfterSelectedTime
+                    );
+                  }
+                  return false;
+                })
             );
             if (
               !nextAvailableDate &&

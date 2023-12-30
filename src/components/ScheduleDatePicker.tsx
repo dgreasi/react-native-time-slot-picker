@@ -7,10 +7,9 @@ import { OverrideDataContext } from './LocalContext';
 
 interface Props {
   availableDates: IAvailableDates[];
-  selectedDate: IAvailableDates | undefined;
-  setSelectedDate: (date: IAvailableDates) => void;
-  setSelectedTime: (time: string) => void;
-  scheduledAppointment: IAppointment | undefined;
+  selectedDay: string;
+  setSelectedDay: (date: string) => void;
+  scheduledAppointments: IAppointment[] | undefined;
   backgroundColor?: string;
 }
 
@@ -19,10 +18,9 @@ const currentDay = today.getDate();
 
 const ScheduleDatePicker = ({
   availableDates,
-  selectedDate,
-  setSelectedDate,
-  setSelectedTime,
-  scheduledAppointment,
+  selectedDay,
+  setSelectedDay,
+  scheduledAppointments,
   backgroundColor = theme.colors.white,
 }: Props) => {
   const scrollRef = useRef<any>();
@@ -32,35 +30,35 @@ const ScheduleDatePicker = ({
     [monthNamesOverride]
   );
 
-  const getScheduledAppointmentDate = useCallback(
-    (date) => new Date(date).getDate(),
+  const getScheduledAppointmentsDate = useCallback(
+    (date: string) => new Date(date).getDate(),
     []
   );
 
   const onDatePress = (date: IAvailableDates) => {
-    setSelectedDate(date);
-    setSelectedTime(date?.slotTimes?.[0] || '');
+    setSelectedDay(date.date);
   };
 
-  const getAppointmentDay: () => number = useCallback(() => {
-    if (scheduledAppointment?.appointmentDate) {
-      return getScheduledAppointmentDate(scheduledAppointment?.appointmentDate);
-    }
+  const getAppointmentDays: () => number[] = useCallback(() => {
+    const schecduledDays = scheduledAppointments?.map((data) =>
+      getScheduledAppointmentsDate(data.appointmentDate)
+    );
+    if (schecduledDays?.length) return schecduledDays;
 
-    return -1;
-  }, [scheduledAppointment?.appointmentDate, getScheduledAppointmentDate]);
+    return [];
+  }, [scheduledAppointments, getScheduledAppointmentsDate]);
 
   const dateContainer = (date: IAvailableDates, index: number) => {
     return (
       <View key={index}>
         <ScheduleDateElement
           slotDate={date}
-          selectedDate={selectedDate}
+          selectedDay={selectedDay}
           onPress={() => {
             onDatePress(date);
           }}
           currentDay={currentDay}
-          appointmentDay={getAppointmentDay()}
+          appointmentDays={getAppointmentDays()}
         />
       </View>
     );

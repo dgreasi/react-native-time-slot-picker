@@ -3,29 +3,24 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { theme } from '../utils/theme';
 import {
   OverrideDataContext,
-  ScheduledAppointmentContext,
-  SelectedDateContext,
+  scheduledAppointmentsContext,
+  selectedDayContext,
 } from './LocalContext';
 
 interface Props {
   value: string;
   onPress: () => void;
-  selectedTime: string;
 }
 
-const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
-  const isSelected = selectedTime === value;
-  const scheduledAppointment = useContext(ScheduledAppointmentContext);
-  const selectedDate = useContext(SelectedDateContext);
+const TimeSlot = ({ value, onPress }: Props) => {
+  const scheduledAppointments = useContext(scheduledAppointmentsContext);
+  const selectedDay = useContext(selectedDayContext);
   const { mainColor, timeSlotWidth } = useContext(OverrideDataContext);
 
-  const appointmentDateToCompare = useMemo(
-    () => scheduledAppointment?.appointmentDate?.split('T')[0],
-    [scheduledAppointment?.appointmentDate]
-  );
-  const selectedDateToCompare = useMemo(
-    () => selectedDate.split('T')[0],
-    [selectedDate]
+  const isSelected = scheduledAppointments?.find(
+    (appointment) =>
+      appointment.appointmentDate === selectedDay &&
+      appointment.appointmentTime === value
   );
 
   const appointmentDot = useMemo(() => {
@@ -41,23 +36,12 @@ const TimeSlot = ({ value, onPress, selectedTime }: Props) => {
 
   // Check if there is an appointment to mark time slot appropriately
   const getAppointmentDot: () => React.JSX.Element | null = useCallback(() => {
-    if (scheduledAppointment?.appointmentDate) {
-      if (
-        selectedDateToCompare === appointmentDateToCompare &&
-        scheduledAppointment.appointmentTime === value
-      ) {
-        return appointmentDot;
-      }
+    if (isSelected) {
+      return appointmentDot;
     }
 
     return null;
-  }, [
-    appointmentDot,
-    scheduledAppointment,
-    appointmentDateToCompare,
-    selectedDateToCompare,
-    value,
-  ]);
+  }, [appointmentDot, isSelected]);
 
   return (
     <TouchableOpacity onPress={onPress}>

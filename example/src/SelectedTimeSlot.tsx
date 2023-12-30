@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { IAppointment } from '@dgreasi/react-native-time-slot-picker';
 
 interface Props {
-  dateOfAppointment: IAppointment | null;
+  scheduledAppointments: IAppointment[] | null;
 }
 
-export const SelectedTimeSlot = ({ dateOfAppointment }: Props) => {
+export const SelectedTimeSlot = ({ scheduledAppointments }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.boldFont}>Selected time slot</Text>
@@ -20,13 +20,21 @@ export const SelectedTimeSlot = ({ dateOfAppointment }: Props) => {
       <View style={styles.valueContainer}>
         <Text style={styles.boldFont}>appointmentDate: </Text>
         <View style={styles.borderOfValue}>
-          <Text>{dateOfAppointment?.appointmentDate}</Text>
+          <Text>
+            {scheduledAppointments && scheduledAppointments[0]
+              ? scheduledAppointments[0].appointmentDate
+              : ''}
+          </Text>
         </View>
       </View>
       <View style={styles.valueContainer}>
         <Text style={styles.boldFont}>appointmentTime: </Text>
         <View style={styles.borderOfValue}>
-          <Text>{dateOfAppointment?.appointmentTime}</Text>
+          <Text>
+            {scheduledAppointments && scheduledAppointments[0]
+              ? scheduledAppointments[0].appointmentTime
+              : ''}
+          </Text>
         </View>
       </View>
     </View>

@@ -15,9 +15,9 @@ interface IOverrideData {
   monthNamesOverride: string[];
 }
 
-export const SelectedDateContext = createContext<string>('');
-export const ScheduledAppointmentContext = createContext<
-  IAppointment | undefined
+export const selectedDayContext = createContext<string>('');
+export const scheduledAppointmentsContext = createContext<
+  IAppointment[] | undefined
 >(undefined);
 
 export const OverrideDataContext = createContext<IOverrideData>({
@@ -30,23 +30,23 @@ export const OverrideDataContext = createContext<IOverrideData>({
 interface Props {
   children: React.ReactNode;
   slotDate: string;
-  scheduledAppointment: IAppointment | undefined;
+  scheduledAppointments: IAppointment[] | undefined;
   overrideData: IOverrideData;
 }
 
 export const LocalContext = ({
   children,
   slotDate,
-  scheduledAppointment,
+  scheduledAppointments,
   overrideData,
 }: Props) => {
   return (
-    <SelectedDateContext.Provider value={slotDate}>
-      <ScheduledAppointmentContext.Provider value={scheduledAppointment}>
+    <selectedDayContext.Provider value={slotDate}>
+      <scheduledAppointmentsContext.Provider value={scheduledAppointments}>
         <OverrideDataContext.Provider value={overrideData}>
           {children}
         </OverrideDataContext.Provider>
-      </ScheduledAppointmentContext.Provider>
-    </SelectedDateContext.Provider>
+      </scheduledAppointmentsContext.Provider>
+    </selectedDayContext.Provider>
   );
 };

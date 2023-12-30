@@ -1,5 +1,4 @@
 import { IAvailableDates } from '@dgreasi/react-native-time-slot-picker';
-
 function generateTimeSlots(startDate: Date, slotLength: number): string[] {
   let times: string[] = []; // time array
   let tt =
@@ -33,12 +32,11 @@ export function generateAvailableDates(
 ): IAvailableDates[] {
   let availableDates: IAvailableDates[] = [];
   let currentDate = new Date();
-  // Garantee that the time is 0:00:00
-  currentDate.setHours(0, 0, 0, 0);
 
   // Generate the list of time slots starting from the current time
   for (let i = 0; i < numDays; i++) {
     let slotTimes = generateTimeSlots(currentDate, slotLength);
+    currentDate.setHours(0, 0, 0, 0); // Reset time to the start of the day
     let dateStr = currentDate.toISOString();
     availableDates.push({ date: dateStr, slotTimes: slotTimes });
 

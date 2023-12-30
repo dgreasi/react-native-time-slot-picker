@@ -5,16 +5,16 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   IAppointment,
   TimeSlotPicker,
+  generateAvailableDates,
 } from '@dgreasi/react-native-time-slot-picker';
 import { SelectedTimeSlot } from './SelectedTimeSlot';
-import { generateAvailableDates } from '../../src/utils/availableSlots';
 
 export default function App() {
   const [scheduledAppointments, setScheduledAppointments] = useState<
     IAppointment[] | undefined
   >();
   const dummyAvailableDates = React.useMemo(() => {
-    return generateAvailableDates(3, 30);
+    return generateAvailableDates(2, 60);
   }, []);
   return (
     <SafeAreaProvider>

@@ -100,6 +100,8 @@ const TimeSlots = ({
               multipleSelectionStrategy === 'consecutive'
             ) {
               priorAvailableDate = availableDates.find((data) => {
+                console.log('data.date', data.date);
+                console.log('priorDay.toISOString()', priorDay.toISOString());
                 return (
                   data.date === priorDay.toISOString() &&
                   data.slotTimes.find(
@@ -157,6 +159,8 @@ const TimeSlots = ({
                 data.appointmentDate === nextAvailableDate?.date &&
                 data.appointmentTime.split('-')[0] === valueEndTime
             );
+            console.log('isPriorScheduled', isPriorScheduled);
+            console.log('isNextScheduled', isNextScheduled);
             if (!(isPriorScheduled && isNextScheduled))
               setScheduledAppointments(
                 scheduledAppointments.filter(

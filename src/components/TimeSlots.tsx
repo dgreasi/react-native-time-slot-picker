@@ -2,12 +2,13 @@ import React, { useCallback } from 'react';
 import TimeSlot from './TimeSlot';
 import { StyleSheet, Text, View } from 'react-native';
 import { theme } from '../utils/theme';
-import { IAppointment } from '../interfaces/app.interface';
+import { IAppointment, IAvailableDates } from '../interfaces/app.interface';
 
 interface Props {
   selectedDay: string;
   slotTimes: string[];
   scheduledAppointments: IAppointment[] | undefined;
+  availableDates: IAvailableDates[];
   setScheduledAppointments: (value: IAppointment[]) => void;
   multipleSelection: boolean;
   multipleSelectionStrategy:
@@ -23,6 +24,7 @@ const TimeSlots = ({
   selectedDay,
   slotTimes,
   scheduledAppointments,
+  availableDates,
   setScheduledAppointments,
   multipleSelection,
   multipleSelectionStrategy,
@@ -61,24 +63,81 @@ const TimeSlots = ({
             const valueSplit = value.split('-');
             const valueStartTime = valueSplit[0];
             const valueEndTime = valueSplit[1];
-            const isConsecutive =
-              scheduledAppointments.find((data) => {
-                const dataSplit = data.appointmentTime.split('-');
-                const dataStartTime = dataSplit[0];
-                if (data.appointmentDate === selectedDay) {
-                  if (dataStartTime === valueEndTime) return true;
-                }
-                return false;
-              }) &&
-              scheduledAppointments.find((data) => {
-                const dataSplit = data.appointmentTime.split('-');
-                const dataEndTime = dataSplit[1];
-                if (data.appointmentDate === selectedDay) {
-                  if (dataEndTime === valueStartTime) return true;
-                }
-                return false;
+            // find the prior and next consecutive time slots, they may be in the prior or next day, and check if they are scheculed
+            const priorDay = new Date(selectedDay);
+            priorDay.setDate(priorDay.getDate() - 1);
+            const nextDay = new Date(selectedDay);
+            nextDay.setDate(nextDay.getDate() + 1);
+            let priorAvailableDate = availableDates.find(
+              (data) =>
+                data.date === selectedDay &&
+                data.slotTimes.find((slotTime) => {
+                  const valueStartTimeSplit = valueStartTime?.split(':');
+                  const slotTimeSplit = slotTime.split('-')[0]?.split(':');
+                  if (
+                    valueStartTimeSplit &&
+                    slotTimeSplit &&
+                    valueStartTimeSplit[0] &&
+                    valueStartTimeSplit[1] &&
+                    slotTimeSplit[0] &&
+                    slotTimeSplit[1]
+                  ) {
+                    const isSlotBeforeSelectedTime =
+                      parseInt(valueStartTimeSplit[0], 10) * 60 +
+                        parseInt(valueStartTimeSplit[1], 10) >
+                      parseInt(slotTimeSplit[0], 10) * 60 +
+                        parseInt(slotTimeSplit[1], 10);
+                    return (
+                      slotTime.split('-')[1] === valueStartTime &&
+                      isSlotBeforeSelectedTime
+                    );
+                  }
+                  return false;
+                })
+            );
+            if (
+              !priorAvailableDate &&
+              multipleSelectionStrategy === 'consecutive'
+            ) {
+              priorAvailableDate = availableDates.find((data) => {
+                return (
+                  data.date === priorDay.toISOString() &&
+                  data.slotTimes.find(
+                    (slotTime) => slotTime.split('-')[1] === valueStartTime
+                  )
+                );
               });
-            if (!isConsecutive)
+            }
+            let nextAvailableDate = availableDates.find(
+              (data) =>
+                data.date === selectedDay &&
+                data.slotTimes.find(
+                  (slotTime) => slotTime.split('-')[0] === valueEndTime
+                )
+            );
+            if (
+              !nextAvailableDate &&
+              multipleSelectionStrategy === 'consecutive'
+            ) {
+              nextAvailableDate = availableDates.find(
+                (data) =>
+                  data.date === nextDay.toISOString() &&
+                  data.slotTimes.find(
+                    (slotTime) => slotTime.split('-')[0] === valueEndTime
+                  )
+              );
+            }
+            const isPriorScheduled = scheduledAppointments.find(
+              (data) =>
+                data.appointmentDate === priorAvailableDate?.date &&
+                data.appointmentTime.split('-')[1] === valueStartTime
+            );
+            const isNextScheduled = scheduledAppointments.find(
+              (data) =>
+                data.appointmentDate === nextAvailableDate?.date &&
+                data.appointmentTime.split('-')[0] === valueEndTime
+            );
+            if (!(isPriorScheduled && isNextScheduled))
               setScheduledAppointments(
                 scheduledAppointments.filter(
                   (data) => data.appointmentTime !== value

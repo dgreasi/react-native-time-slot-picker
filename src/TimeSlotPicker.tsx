@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IAppointment, IAvailableDates } from './interfaces/app.interface';
 import { View } from 'react-native';
 import ScheduleDatePicker from './components/ScheduleDatePicker';
@@ -46,15 +46,20 @@ const TimeSlotPicker = ({
   dayNamesOverride = defaultDayNames,
   monthNamesOverride = defaultMonthNames,
 }: Props) => {
-  const sortedAppointments = scheduledAppointments?.sort((a, b) => {
-    return (
-      new Date(a.appointmentDate).getTime() -
-      new Date(b.appointmentDate).getTime()
-    );
-  });
-  const sortedAvailableDates = availableDates.sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
-  });
+  const sortedAppointments = useMemo(() => {
+    return scheduledAppointments?.sort((a, b) => {
+      return (
+        new Date(a.appointmentDate).getTime() -
+        new Date(b.appointmentDate).getTime()
+      );
+    });
+  }, [scheduledAppointments]);
+  const sortedAvailableDates = useMemo(() => {
+    return availableDates.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+  }, [availableDates]);
+
   const [selectedDay, setSelectedDay] = useState<string>(
     sortedAppointments && sortedAppointments[0]
       ? sortedAppointments[0].appointmentDate
@@ -92,6 +97,7 @@ const TimeSlotPicker = ({
               availableDates.find((data) => data.date === selectedDay)
                 ?.slotTimes || []
             }
+            availableDates={availableDates}
             scheduledAppointments={scheduledAppointments}
             setScheduledAppointments={setScheduledAppointments}
             multipleSelection={multipleSelection}

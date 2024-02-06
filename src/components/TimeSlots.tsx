@@ -32,6 +32,7 @@ const TimeSlots = ({
   backgroundColor = theme.colors.white,
 }: Props) => {
   const onPress = (value: string) => {
+    // If no appointments are scheduled, add the selected time slot
     if (!scheduledAppointments || scheduledAppointments.length === 0)
       setScheduledAppointments([
         {
@@ -40,7 +41,10 @@ const TimeSlots = ({
         },
       ]);
     else {
+      // An appointment is already scheduled
       if (!multipleSelection) {
+        // Single time slot selection
+        // If the selected time slot is already scheduled, remove it
         if (
           scheduledAppointments &&
           scheduledAppointments[0] &&
@@ -48,10 +52,12 @@ const TimeSlots = ({
         )
           setScheduledAppointments([]);
       } else {
+        // Multiple time slot selection
         const isAlreadyScheduled = scheduledAppointments.find(
           (data) => data.appointmentTime === value
         );
         if (isAlreadyScheduled) {
+          // non-consecutive strategy, just remove the selected time slot
           if (multipleSelectionStrategy === 'non-consecutive')
             setScheduledAppointments(
               scheduledAppointments.filter(
@@ -59,11 +65,11 @@ const TimeSlots = ({
               )
             );
           else {
-            // only remove if it is not consecutive
+            // Check if removing the time slot will break the consecutive rule
             const valueSplit = value.split('-');
             const valueStartTime = valueSplit[0];
             const valueEndTime = valueSplit[1];
-            // find the prior and next consecutive time slots, they may be in the prior or next day, and check if they are scheculed
+            // find the prior and next consecutive time slots, they may be in different days
             const priorDay = new Date(selectedDay);
             priorDay.setDate(priorDay.getDate() - 1);
             const nextDay = new Date(selectedDay);
@@ -74,6 +80,7 @@ const TimeSlots = ({
                 data.slotTimes.find((slotTime) => {
                   const valueStartTimeSplit = valueStartTime?.split(':');
                   const slotTimeSplit = slotTime.split('-')[0]?.split(':');
+                  // Type safety check
                   if (
                     valueStartTimeSplit &&
                     slotTimeSplit &&
@@ -82,11 +89,13 @@ const TimeSlots = ({
                     slotTimeSplit[0] &&
                     slotTimeSplit[1]
                   ) {
-                    const isSlotBeforeSelectedTime =
+                    const valueMinutes =
                       parseInt(valueStartTimeSplit[0], 10) * 60 +
-                        parseInt(valueStartTimeSplit[1], 10) >
+                      parseInt(valueStartTimeSplit[1], 10);
+                    const slotMinutes =
                       parseInt(slotTimeSplit[0], 10) * 60 +
-                        parseInt(slotTimeSplit[1], 10);
+                      parseInt(slotTimeSplit[1], 10);
+                    const isSlotBeforeSelectedTime = slotMinutes < valueMinutes;
                     return (
                       slotTime.split('-')[1] === valueStartTime &&
                       isSlotBeforeSelectedTime
@@ -97,11 +106,10 @@ const TimeSlots = ({
             );
             if (
               !priorAvailableDate &&
-              multipleSelectionStrategy === 'consecutive'
+              multipleSelectionStrategy !== 'same-day-consecutive'
             ) {
+              // Check the prior day
               priorAvailableDate = availableDates.find((data) => {
-                console.log('data.date', data.date);
-                console.log('priorDay.toISOString()', priorDay.toISOString());
                 return (
                   data.date === priorDay.toISOString() &&
                   data.slotTimes.find(
@@ -110,6 +118,7 @@ const TimeSlots = ({
                 );
               });
             }
+            // Check for the next available time slot in the same day
             let nextAvailableDate = availableDates.find(
               (data) =>
                 data.date === selectedDay &&
@@ -124,11 +133,14 @@ const TimeSlots = ({
                     slotTimeSplit[0] &&
                     slotTimeSplit[1]
                   ) {
-                    const isSlotAfterSelectedTime =
+                    const valueMinutes =
                       parseInt(valueStartTimeSplit[0], 10) * 60 +
-                        parseInt(valueStartTimeSplit[1], 10) <
+                      parseInt(valueStartTimeSplit[1], 10);
+                    const timeSlotMinutes =
                       parseInt(slotTimeSplit[0], 10) * 60 +
-                        parseInt(slotTimeSplit[1], 10);
+                      parseInt(slotTimeSplit[1], 10);
+                    const isSlotAfterSelectedTime =
+                      valueMinutes < timeSlotMinutes;
                     return (
                       slotTime.split('-')[0] === valueEndTime &&
                       isSlotAfterSelectedTime
@@ -139,8 +151,9 @@ const TimeSlots = ({
             );
             if (
               !nextAvailableDate &&
-              multipleSelectionStrategy === 'consecutive'
+              multipleSelectionStrategy !== 'same-day-consecutive'
             ) {
+              // Check the next day
               nextAvailableDate = availableDates.find(
                 (data) =>
                   data.date === nextDay.toISOString() &&
@@ -149,6 +162,7 @@ const TimeSlots = ({
                   )
               );
             }
+            // If the slot isn't consecutive (either the first or last slot) and remove it
             const isPriorScheduled = scheduledAppointments.find(
               (data) =>
                 data.appointmentDate === priorAvailableDate?.date &&
@@ -159,8 +173,6 @@ const TimeSlots = ({
                 data.appointmentDate === nextAvailableDate?.date &&
                 data.appointmentTime.split('-')[0] === valueEndTime
             );
-            console.log('isPriorScheduled', isPriorScheduled);
-            console.log('isNextScheduled', isNextScheduled);
             if (!(isPriorScheduled && isNextScheduled))
               setScheduledAppointments(
                 scheduledAppointments.filter(
@@ -169,6 +181,7 @@ const TimeSlots = ({
               );
           }
         } else {
+          // New time slot
           if (multipleSelectionStrategy === 'non-consecutive')
             setScheduledAppointments([
               ...scheduledAppointments,
@@ -178,6 +191,7 @@ const TimeSlots = ({
               },
             ]);
           else {
+            // Check if it's consecutive
             const valueSplit = value.split('-');
             const valueStartTime = valueSplit[0];
             const valueEndTime = valueSplit[1];

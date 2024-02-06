@@ -78,8 +78,8 @@ const availableDates: IAvailableDates[] = [
 ];
 
 export default function App() {
-  const [dateOfAppointment, setDateOfAppointment] =
-    useState<IAppointment | null>(null);
+  const [scheduledAppointments, setScheduledAppointments] =
+    useState<IAppointment[]>([]);
 
   useEffect(() => {
     // Contains the selected date, time slot in the following format
@@ -91,8 +91,9 @@ export default function App() {
     <SafeAreaView>
       <StatusBar backgroundColor="transparent" barStyle="dark-content" />
       <TimeSlotPicker
-        availableDates={availableDates}
-        setDateOfAppointment={setDateOfAppointment}
+        scheduledAppointments={scheduledAppointments}
+        setScheduledAppointments={setScheduledAppointments}
+        availableDates={dummyAvailableDates}
       />
     </SafeAreaView>
   );
@@ -105,9 +106,11 @@ You can find a detailed example [here](example/src/App.tsx).
 
 | Prop name                   | Description                                                                                                                 | Type                                   | Default                                                                                                                      |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `setDateOfAppointment`      | A component to use on top of header image. It can also be used without header image to render a custom component as header. | `(data: IAppointment \| null) => void` | **REQUIRED**                                                                                                                 |
 | `availableDates`            | The array of the available slot times per date.                                                                             | `IAvailableDates[]`                    | [fixedAvailableDates](src/utils/dateHelpers.ts)                                                                              |
-| `scheduledAppointment`      | An already existed appointment, which is going to mark the specific date as `with appointment`.                             | `IAppointment`                         | `undefined`                                                                                                                  |
+| `scheduledAppointments`      | An already existing array of appointments, which is going to mark the specific dates as `with appointment`.                             | `IAppointment[]`                         | `[]`
+| `setScheduledAppointments`      | Callback called when the user selects or deselects a time slot. It contains all currently selected time slots. | `(data: IAppointment[]) => void` | **REQUIRED**                                                                                                                 |
+| `multipleSelection`      | Enables the selection of multiple slots. | `boolean` | `false`                                                                                                                 |                                          |
+| `multipleSelectionStrategy`      | Strategy used to restrict selection and deselection.  | `"consecutive" \| "same-day-consecutive" \| "non-consecutive"` | `non-consecutive` |                                          |
 | `marginTop`                 | Margin top for the whole component.                                                                                         | `number`                               | `0`                                                                                                                          |
 | `datePickerBackgroundColor` | Background color of the section with the horizontal scroll, which contains the days.                                        | `hex string`                           | `'#FFFFFF'`                                                                                                                  |
 | `timeSlotsBackgroundColor`  | Background color of the section that contains the time slots.                                                               | `hex string`                           | `'#FFFFFF'`                                                                                                                  |

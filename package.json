@@ -70,11 +70,11 @@
     "@release-it/conventional-changelog": "^10.0.6",
     "@types/jest": "^30.0.0",
     "@types/react": "~19.2.14",
-    "@types/react-native": "0.73.0",
     "commitlint": "^20.5.0",
     "del-cli": "^7.0.0",
-    "eslint": "^10.0.3",
-    "eslint-config-prettier": "^10.1.8",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-ft-flow": "^3.0.11",
     "eslint-plugin-prettier": "^5.5.5",
     "jest": "^30.3.0",
     "pod-install": "^1.0.14",
@@ -95,7 +95,7 @@
   "engines": {
     "node": ">= 22.0.0"
   },
-  "packageManager": "^yarn@1.22.15",
+  "packageManager": "yarn@1.22.22",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -146,7 +146,13 @@
   },
   "eslintIgnore": [
     "node_modules/",
-    "lib/"
+    "lib/",
+    "scripts/",
+    "example/metro.config.js",
+    "example/babel.config.js",
+    "example/webpack.config.js",
+    "example/App.js",
+    "babel.config.js"
   ],
   "prettier": {
     "quoteProps": "consistent",

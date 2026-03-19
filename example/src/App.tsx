@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { StatusBar } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   IAppointment,
   TimeSlotPicker,
 } from '@dgreasi/react-native-time-slot-picker';
+import * as React from 'react';
+import { useState } from 'react';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { SelectedTimeSlot } from './SelectedTimeSlot';
 import { bookedData, dummyAvailableDates } from './data';
 

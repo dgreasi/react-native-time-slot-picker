@@ -1,4 +1,16 @@
 - commits:
+    - subject: "chore: readme update"
+      hash: 0970ae1f189dad89ed73fe5bf063dc25242251d2
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+  version: 0.2.4
+  title: ""
+  date: 2026-03-19T12:47:37.387Z
+- commits:
     - subject: "chore: update Babel preset and GitHub Actions versions"
       hash: 2e4fbf4c2b0c85107b137b97206e98286b64d769
       body: ""

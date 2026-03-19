@@ -1,6 +1,6 @@
 {
   "name": "@dgreasi/react-native-time-slot-picker",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A time slot picker for react native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -177,6 +177,6 @@
     ]
   },
   "versionist": {
-    "publishedAt": "2026-03-19T12:13:56.480Z"
+    "publishedAt": "2026-03-19T12:21:07.296Z"
   }
 }

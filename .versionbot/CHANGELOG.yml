@@ -1,4 +1,16 @@
 - commits:
+    - subject: "chore: update Babel preset and GitHub Actions versions"
+      hash: 2e4fbf4c2b0c85107b137b97206e98286b64d769
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+  version: 0.2.3
+  title: ""
+  date: 2026-03-19T12:21:07.249Z
+- commits:
     - subject: "chore: update Node.js to v22 and fix README formatting"
       hash: 5063387d1e837cb2d1f3386d7e9bf28f00c74d47
       body: ""

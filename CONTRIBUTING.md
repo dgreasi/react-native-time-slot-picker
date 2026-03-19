@@ -114,3 +114,5 @@ When you're sending a pull request:
 - Review the documentation to make sure it looks good.
 - Follow the pull request template when opening a pull request.
 - For pull requests that change the API or implementation, discuss with maintainers first by opening an issue.
+
+Our PR workflow works according to [flowzone](https://github.com/product-os/flowzone) for new releases

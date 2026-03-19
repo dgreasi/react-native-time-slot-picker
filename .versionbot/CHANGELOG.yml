@@ -1,4 +1,24 @@
 - commits:
+    - subject: "chore: adjust import indentation in App.tsx"
+      hash: 539ebdcff73b876bf4502e424934c12f57f150d7
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+    - subject: "chore: update changelog"
+      hash: ff1d3a11238563b1dc35ee29248ad182c5438bab
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Dgreasidis
+      nested: []
+  version: 0.2.1
+  title: ""
+  date: 2026-03-19T11:53:00.097Z
+- commits:
     - subject: "chore: update example"
       hash: c42224f34aacb336e44d8d6af0e10cbf94ed34d5
       body: ""

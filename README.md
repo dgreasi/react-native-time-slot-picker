@@ -84,7 +84,7 @@ export default function App() {
   useEffect(() => {
     // Contains the selected date, time slot in the following format
     // {"appointmentDate": "2023-08-17T21:00:00.000Z", "appointmentTime": "18:00-19:00"}
-    console.log('Date of appointment updated: ', dateOfAppointment);
+    console.log('Date of appointment updated : ', dateOfAppointment);
   }, [dateOfAppointment]);
 
   return (
